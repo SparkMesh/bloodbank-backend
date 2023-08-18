@@ -17,6 +17,7 @@ const registerController = async (req, res) => {
     const hashedPassword = await bcrypt.hash(req.body.password, salt);
     req.body.password = hashedPassword;
     //rest data
+    console.log(req.body)
     const user = new userModel(req.body);
     await user.save();
     return res.status(201).send({

@@ -63,7 +63,7 @@ function App() {
           }
         />
         <Route
-          path="/analytics"
+          path="/recentrecords"
           element={
             <ProtectedRoute>
               <Analytics />

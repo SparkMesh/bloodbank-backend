@@ -54,6 +54,12 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: [true, "phone numbe is required"],
     },
+    divison: {
+type:String,
+    },
+    district: {
+      type:String,
+    }
   },
   { timestamps: true }
 );

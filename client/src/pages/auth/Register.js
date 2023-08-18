@@ -11,11 +11,11 @@ const Register = () => {
       {loading ? (
         <Spinner />
       ) : (
-        <div className="row g-0">
+        <div className="flex sm:flex-row flex-col gap-8 h-screen justify-start items-center bg-gray-100">
           <div className="col-md-8 form-banner ">
-            <img src="./assets/images/banner2.jpg" alt="registerImage" />
+            <img className="h-30 " src="./assets/images/banner2.jpg" alt="registerImage" />
           </div>
-          <div className="col-md-4 form-container">
+          <div className="sm:mr-8">
             <Form
               formTitle={"Register"}
               submitBtn={"Register"}

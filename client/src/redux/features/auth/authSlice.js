@@ -10,12 +10,31 @@ const initialState = {
   user: null,
   token,
   error: null,
+  menuCollapsed: window.innerWidth<768? -1:0 ,
 };
 
 const authSlice = createSlice({
   name: "auth",
   initialState: initialState,
-  reducers: {},
+  reducers: {
+    toggleMenuCollapsed: (state) => {
+      state.menuCollapsed = state.menuCollapsed+1;
+      if(window.innerWidth<768){
+      if(state.menuCollapsed==0){
+        state.menuCollapsed=1;
+      }
+    else if(state.menuCollapsed==2){
+      state.menuCollapsed=-1;
+    }
+  }
+      else{
+        if(state.menuCollapsed>1){
+          state.menuCollapsed=0;
+        }
+      }
+      console.log(state.menuCollapsed);
+    },
+  },
   extraReducers: (builder) => {
     // login user
     builder.addCase(userLogin.pending, (state) => {
@@ -60,4 +79,5 @@ const authSlice = createSlice({
   },
 });
 
+export const { toggleMenuCollapsed } = authSlice.actions;
 export default authSlice;

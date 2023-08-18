@@ -11,11 +11,13 @@ const Login = () => {
       {loading ? (
         <Spinner />
       ) : (
-        <div className="row g-0">
+        <div className="flex sm:flex-row flex-col h-screen gap-8 justify-start items-center bg-gray-100">
           <div className="col-md-8 form-banner">
-            <img src="./assets/images/banner1.jpg" alt="loginImage" />
+            <img
+            className="h-30"
+            src="./assets/images/banner1.jpg" alt="loginImage" />
           </div>
-          <div className="col-md-4 form-container">
+          <div className="sm:mr-8">
             <Form
               formTitle={"Login Page"}
               submitBtn={"Login"}

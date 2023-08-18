@@ -1,20 +1,22 @@
 import React, { useState, useEffect } from "react";
-import Header from "../../components/shared/Layout/Header";
+
 import API from "./../../services/API";
 import moment from "moment";
-
+import { Card, Col, Row } from 'antd';
+import { motion } from "framer-motion";
+import Layout from "../../components/shared/Layout/Layout";
 const Analytics = () => {
   const [data, setData] = useState([]);
   const [inventoryData, setInventoryData] = useState([]);
   const colors = [
-    "#884A39",
-    "#C38154",
-    "#FFC26F",
+    "#be123c",
+    "#c2410c",
+    "#b45309",
     "#4F709C",
-    "#4942E4",
-    "#0079FF",
-    "#FF0060",
-    "#22A699",
+    "#4d7c0f",
+    "#a21caf",
+    "#be185d",
+    "#0e7490",
   ];
   //GET BLOOD GROUP DATA
   const getBloodGroupData = async () => {
@@ -52,18 +54,32 @@ const Analytics = () => {
   }, []);
   return (
     <>
-      <Header />
-      <div className="d-flex flex-row flex-wrap">
+      
+      <Layout
+      
+      >
+      <div className="grid sm:grid-cols-4  items-center justify-center grid-cols-2 gap-4 m-4">
         {data?.map((record, i) => (
-          <div
-            className="card m-2 p-1"
+          <Card.Grid
+          
+            className="text-white max-w-[250px] hover:scale-110 transition-all font-thin p-4 shadow-lg shadow-gray-400 rounded-lg"
             key={i}
-            style={{ width: "18rem", backgroundColor: `${colors[i]}` }}
+            style={{  backgroundColor: `${colors[i]}` }}
           >
             <div className="card-body">
-              <h1 className="card-title bg-light text-dark text-center mb-3">
-                {record.bloodGroup}
-              </h1>
+            <p className="text-white font-bold  ">{record.bloodGroup}</p>
+            <motion.div
+            initial={{
+              width:0
+            }}
+            animate={{
+              width:"100%"
+            }}
+            transition={{
+              duration:0.5
+            }}
+            className="w-full border-b-2 border-gray-300 rounded-full "
+            />
               <p className="card-text">
                 Total In : <b>{record.totalIn}</b> (ML)
               </p>
@@ -74,34 +90,35 @@ const Analytics = () => {
             <div className="card-footer text-light bg-dark text-center">
               Total Available : <b>{record.availabeBlood}</b> (ML)
             </div>
-          </div>
+          </Card.Grid>
         ))}
       </div>
-      <div className="container my-3">
-        <h1 className="my-3">Recent Blood Transactions</h1>
-        <table className="table ">
-          <thead>
+      <div className="overflow-x-scroll flex flex-col justify-center items-start m-2 ">
+        <h1 className="font-bold">Recent Blood Transactions :</h1>
+        <table >
+          <thead >
             <tr>
-              <th scope="col">Blood Group</th>
-              <th scope="col">Inventory Type</th>
-              <th scope="col">Quantity</th>
-              <th scope="col">Donar Email</th>
-              <th scope="col">TIme & Date</th>
+              <th className="border-r-[2px] pr-1.5" scope="col">Blood Group</th>
+              <th className="border-r-[2px] pr-1.5" scope="col">Inventory Type</th>
+              <th className="border-r-[2px] pr-1.5" scope="col">Quantity</th>
+              <th className="border-r-[2px] pr-1.5" scope="col">Donar Email</th>
+              <th className="border-r-[2px] pr-1.5" scope="col">TIme & Date</th>
             </tr>
           </thead>
           <tbody>
             {inventoryData?.map((record) => (
               <tr key={record._id}>
-                <td>{record.bloodGroup}</td>
-                <td>{record.inventoryType}</td>
-                <td>{record.quantity} (ML)</td>
-                <td>{record.email}</td>
-                <td>{moment(record.createdAt).format("DD/MM/YYYY hh:mm A")}</td>
+                <td className="border-r-[2px] pr-1.5">{record.bloodGroup}</td>
+                <td className="border-r-[2px] pr-1.5">{record.inventoryType}</td>
+                <td className="border-r-[2px] pr-1.5">{record.quantity} (ML)</td>
+                <td className="border-r-[2px] pr-1.5">{record.email}</td>
+                <td className="border-r-[2px] pr-1.5">{moment(record.createdAt).format("DD/MM/YYYY hh:mm A")}</td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
+      </Layout>
     </>
   );
 };
