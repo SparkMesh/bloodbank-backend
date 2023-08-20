@@ -39,6 +39,15 @@ const inventorySchema = new mongoose.Schema(
         return this.inventoryType === "in";
       },
     },
+    district: {
+      type: String,
+      required: [true, "district is required"],
+    },
+    divison: {
+      type: String,
+
+      required: [true, "divison is required"],
+    },
   },
   { timestamps: true }
 );

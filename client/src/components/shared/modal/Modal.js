@@ -132,6 +132,8 @@ const [bloodGroup, setBloodGroup] = useState(items[0].label);
         inventoryType,
         bloodGroup,
         quantity,
+        divison,
+        district
       });
       if (data?.success) {
         alert("New Record Created");
@@ -252,7 +254,7 @@ const [bloodGroup, setBloodGroup] = useState(items[0].label);
         }
         placeholder="District"
       />
-                  </div>:<p>Select Divison First!</p> } 
+                  </div>:<p>Select Division First!</p> } 
            
           </div>
         </div>

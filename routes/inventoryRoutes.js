@@ -9,6 +9,7 @@ const {
   getOrgnaisationForHospitalController,
   getInventoryHospitalController,
   getRecentInventoryController,
+  getMatchedDonarController,
 } = require("../controllers/inventoryController");
 
 const router = express.Router();
@@ -48,5 +49,7 @@ router.get(
   authMiddelware,
   getOrgnaisationForHospitalController
 );
+
+router.post("/get-donar-inventory", getMatchedDonarController);
 
 module.exports = router;

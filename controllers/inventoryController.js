@@ -261,6 +261,60 @@ const getOrgnaisationForHospitalController = async (req, res) => {
   }
 };
 
+const getMatchedDonarController = async (req, res) => {
+  try {
+    const { bloodGroup, district, divison } = req.body;
+    const donars = await inventoryModel.aggregate([
+      {
+        $match: {
+          inventoryType: "in",
+          bloodGroup,
+          district,
+          divison,
+        },
+      },
+      {
+        $lookup: {
+          from: "users",
+          localField: "donar",
+          foreignField: "_id",
+          as: "donar",
+        },
+
+      },
+      {
+        $unwind: "$donar",
+      },
+      {
+        $project: {
+          name: "$donar.name",
+          organisation: "$donar.organisationName",
+          hospital: "$donar.hospitalName",
+address: "$donar.address",
+          email: "$donar.email",
+          phone: "$donar.phone",
+          quantity: "$quantity",
+          bloodGroup: "$bloodGroup",
+          district: "$district",
+          divison: "$divison",
+        },
+      },
+    ]);
+    return res.status(200).send({
+      success: true,
+      message: "Donar Data Fetched Successfully",
+      donars,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send({
+      success: false,
+      message: "Error In Donar API",
+      error,
+    });
+  }
+};
+
 module.exports = {
   createInventoryController,
   getInventoryController,
@@ -270,4 +324,5 @@ module.exports = {
   getOrgnaisationForHospitalController,
   getInventoryHospitalController,
   getRecentInventoryController,
+  getMatchedDonarController
 };

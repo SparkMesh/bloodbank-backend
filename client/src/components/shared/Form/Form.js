@@ -290,7 +290,7 @@ setDistrict(0)
         }
         placeholder="District"
       />
-                  </div>:<p>Select Divison First!</p> } 
+                  </div>:<p>Select Division First!</p> } 
                 </>
               );
             }
