@@ -7,7 +7,7 @@ import Modal from "../components/shared/modal/Modal";
 
 import API from "../services/API";
 import moment from "moment";
-import { Button,Grid,Table } from "antd";
+import { Button,Grid,Table,ConfigProvider, Space } from "antd";
 
 import DemoPie from "../components/DemoPie";
 import DemoArea from "../components/DemoArea";
@@ -153,6 +153,21 @@ const HomePage = () => {
 
   }, []);
   return (
+    <ConfigProvider
+  theme={{
+    token: {
+      // Seed Token
+      colorPrimary: ' #dc2626',
+      borderRadius: 10,
+
+      // Alias Token
+      
+    },
+  }}
+>
+  <Space
+  direction="vertical"
+  >
     <Layout>
       {user?.role === "admin" && navigate("/admin")}
       {error && <span>{alert(error)}</span>}
@@ -179,7 +194,7 @@ const HomePage = () => {
             <DemoPie />
          <DemoArea/>
          <Calendar/>
-         <DemoLiquid/>
+        
          <BarChart/>
             </div>
             <Table 
@@ -200,7 +215,8 @@ const HomePage = () => {
           </div>
         </>
       )}
-    </Layout>
+    </Layout></Space>
+  </ConfigProvider>
   );
 };
 

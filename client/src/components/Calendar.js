@@ -1,5 +1,5 @@
 import React from 'react';
-import { Badge, Calendar } from 'antd';
+import { Badge, Calendar,ConfigProvider, Space } from 'antd';
 const getListData = (value) => {
   let listData;
   switch (value.date()) {
@@ -95,9 +95,25 @@ const CalendarData = () => {
     if (info.type === 'month') return monthCellRender(current);
     return info.originNode;
   };
-  return <Calendar
+  return<ConfigProvider
+  theme={{
+    token: {
+      // Seed Token
+      colorPrimary: ' #dc2626',
+      borderRadius: 10,
+
+      // Alias Token
+      
+    },
+  }}
+>
+  <Space
+  direction="vertical"
+  >
+  <Calendar
   height={300}
   className='shadow-lg shadow-gray-300'
-  fullscreen={false} cellRender={cellRender} />;
+  fullscreen={false} cellRender={cellRender} />  </Space>
+  </ConfigProvider>
 };
 export default CalendarData;

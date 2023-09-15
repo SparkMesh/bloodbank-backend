@@ -60,7 +60,7 @@ const Header = () => {
       
     ) : (
       
-        <Link to="/" className="nav-link">
+        <Link to="/admin" className="nav-link">
           Home
         </Link>
       

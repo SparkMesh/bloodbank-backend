@@ -31,6 +31,7 @@ const registerController = async (req, res) => {
       success: false,
       message: "Error In Register API",
       error,
+      user: req.body,
     });
   }
 };

@@ -79,6 +79,7 @@ const createInventoryController = async (req, res) => {
     return res.status(201).send({
       success: true,
       message: "New Blood Reocrd Added",
+      req: req.body,
     });
   } catch (error) {
     console.log(error);
@@ -95,7 +96,7 @@ const getInventoryController = async (req, res) => {
   try {
     const inventory = await inventoryModel
       .find({
-        organisation: req.body.userId,
+        donar: req.body.userId,
       })
       .populate("donar")
       .populate("hospital")
@@ -104,6 +105,7 @@ const getInventoryController = async (req, res) => {
       success: true,
       messaage: "get all records successfully",
       inventory,
+      req: req.body,
     });
   } catch (error) {
     console.log(error);
@@ -263,7 +265,7 @@ const getOrgnaisationForHospitalController = async (req, res) => {
 
 const getMatchedDonarController = async (req, res) => {
   try {
-    const { bloodGroup, district, divison } = req.body;
+    const { bloodGroup, district, divison,thana } = req.body;
     const donars = await inventoryModel.aggregate([
       {
         $match: {
@@ -271,6 +273,7 @@ const getMatchedDonarController = async (req, res) => {
           bloodGroup,
           district,
           divison,
+          thana,
         },
       },
       {
@@ -297,6 +300,7 @@ address: "$donar.address",
           bloodGroup: "$bloodGroup",
           district: "$district",
           divison: "$divison",
+          thana: "$thana",
         },
       },
     ]);

@@ -3,11 +3,11 @@ import React from "react";
 import { useLocation, BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import { useSelector,useDispatch } from "react-redux";
 import "../../../styles/Layout.css";
-import { Breadcrumb, Layout, Menu, theme,Button } from 'antd';
+import { Breadcrumb, Layout, Menu, theme,Button,ConfigProvider, Space, } from 'antd';
 import { toggleMenuCollapsed } from "../../../redux/features/auth/authSlice";
-import { PieChartOutlined,ArrowRightOutlined,ArrowLeftOutlined,DatabaseOutlined,MedicineBoxOutlined  } from '@ant-design/icons';
+import { ContainerFilled,BankFilled ,PieChartFilled,ArrowRightOutlined,ArrowLeftOutlined,DatabaseFilled,MedicineBoxFilled  } from '@ant-design/icons';
 import {motion,AnimatePresence} from 'framer-motion';
-const { Content, Footer, Sider } = Layout;
+const {  Sider } = Layout;
 
 
 const Sidebar = () => {
@@ -20,70 +20,39 @@ const dispatch = useDispatch();
   const [showMenu,setShowMenu] = React.useState(false);
   
   if (user?.role === "admin"){
-items.push(
-  {
-    key: '1',
-    label: (
-      user?.role === "admin" && (
-        <>
-          <div
-            className={`menu-item ${
-              location.pathname === "/donar-list" && "active"
-            }`}
-          >
-            <i className="fa-solid fa-warehouse"></i>
-            <Link to="/donar-list">Donar List</Link>
-          </div>
-          
-        </>
-      )
-    ),
-    icon: <PieChartOutlined />,
-  }
-)
-items.push(
-  {
-    key: '2',
-    label: (
-      user?.role === "admin" && (
-        <>
-          
-          <div
-            className={`menu-item ${
-              location.pathname === "/hospital-list" && "active"
-            }`}
-          >
-            <i className="fa-solid fa-hand-holding-medical"></i>
-            <Link to="/hospital-list">Hospital List</Link>
-          </div>
-          
-        </>
-      )
-    ),
-    icon: <PieChartOutlined />,
-  }
-)
-items.push(
-  {
-    key: '3',
-    label: (
-      user?.role === "admin" && (
-        <>
-          
-          <div
-            className={`menu-item ${
-              location.pathname === "/org-list" && "active"
-            }`}
-          >
-            <i className="fa-solid fa-hospital"></i>
-            <Link to="/org-list">Organisation List</Link>
-          </div>
-        </>
-      )
-    ),
-    icon: <PieChartOutlined />,
-  }
-)
+    items.push(
+      {key: '1',
+      label:"Admin"
+    ,
+    path:"/admin",
+    icon: <BankFilled />,
+    }
+    )
+    items.push(
+      {key: '2',
+      label:"Donor List"
+    ,
+    path:"/donar-list",
+    icon: <PieChartFilled />,
+    }
+    )
+    items.push(
+      {key: '3',
+      label:"Hospital List"
+    ,
+    path:"/hospital-list",
+    icon: <PieChartFilled />,
+    }
+    )
+    items.push(
+      {key: '4',
+      label:"Organisation List"
+    ,
+    path:"/org-list",
+    icon: <PieChartFilled />,
+    }
+    )
+
 
 }
 
@@ -98,7 +67,7 @@ items.push(
     
     ,
     
-    icon: <DatabaseOutlined />,
+    icon: <DatabaseFilled />,
     path:'/',
     }
     )
@@ -109,7 +78,7 @@ items.push(
      ,
     
     
-    icon: <MedicineBoxOutlined />,
+    icon: <MedicineBoxFilled />,
     path:'/hospital',
     }
     )
@@ -125,7 +94,7 @@ items.push(
     
     
     ,
-    icon: <PieChartOutlined />,
+    icon: <PieChartFilled />,
     path:'/donar',
     }
     )
@@ -147,46 +116,41 @@ if (user?.role === "hospital"){
       )
   )
   ,
-  icon: <PieChartOutlined />,
+  icon: <PieChartFilled />,
   }
   )
+}
+if(user?.role === "donar" ){
+  items.push(
+    {key: '1',
+    label:"Dashboard"
+  ,
+  path:"/",
+  icon: <PieChartFilled />,
+  }
+  )
+  items.push(
+    {key: '2',
+    label:"My Donations",
+    path:"/donation",
+    icon: <ContainerFilled />,
+    })
 }
   if(user?.role === "donar" || user?.role === "hospital"){
     items.push(
       {key: '2',
-      label: (
-        <div
-              className={`menu-item ${
-                location.pathname === "/orgnaisation" && "active"
-              }`}
-            >
-              <i className="fa-sharp fa-solid fa-building-ngo"></i>
-              <Link to="/orgnaisation">Orgnaisation</Link>
-            </div>
-    )
+      label: 
+        
+              "Orgnaisations"
+            
+    
     ,
-    icon: <PieChartOutlined />,
+    icon: <BankFilled />,
+    path:'/orgnaisation',
     }
     )
   } 
-if(user?.role === "donar" ){
-  items.push(
-    {key: '1',
-    label: (
-      <div
-      className={`menu-item ${
-        location.pathname === "/donation" && "active"
-      }`}
-    >
-      <i className="fa-sharp fa-solid fa-building-ngo"></i>
-      <Link to="/donation">Donation</Link>
-    </div>
-  )
-  ,
-  icon: <PieChartOutlined />,
-  }
-  )
-}
+
 
 
   
@@ -203,10 +167,26 @@ if(user?.role === "donar" ){
   //   transition={{duration:0.1}}
     
   //   > 
+   
+  <ConfigProvider
+  theme={{
+    token: {
+      // Seed Token
+      colorPrimary: ' #dc2626',
+      borderRadius: 10,
+
+      // Alias Token
+      
+    },
+  }}
+>
+  <Space
+  direction="vertical"
+  >
    <Layout hasSider>
         <Sider
       
-      theme="dark"
+     
       className="flex relative  flex-col justify-between h-screen rounded-r-lg shadow-md shadow-gray-600 "
       collapsible trigger={null} collapsed={ menuCollapsed == 1 ? false : true}
       //  onCollapse={(value) => {
@@ -250,7 +230,8 @@ if(user?.role === "donar" ){
       
           
          
-      </Layout>
+      </Layout></Space>
+  </ConfigProvider>
     
       
           

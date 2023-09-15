@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import Login from "./pages/auth/Login";
+import AdminLogin from "./pages/auth/AdminLogin";
 import Register from "./pages/auth/Register";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -16,10 +17,13 @@ import DonarList from "./pages/Admin/DonarList";
 import HospitalList from "./pages/Admin/HospitalList";
 import OrgList from "./pages/Admin/OrgList";
 import AdminHome from "./pages/Admin/AdminHome";
+import { Fragment } from "react";
 function App() {
   return (
-    <>
-      <ToastContainer />
+    <Fragment 
+    
+    >
+     
       <Routes>
         <Route
           path="/admin"
@@ -126,8 +130,16 @@ function App() {
             </PublicRoute>
           }
         />
+       <Route
+          path="/admin-login"
+          element={
+            <PublicRoute>
+              <AdminLogin />
+            </PublicRoute>
+          }
+        />
       </Routes>
-    </>
+    </Fragment>
   );
 }
 

@@ -56,10 +56,32 @@ const userSchema = new mongoose.Schema(
     },
     divison: {
 type:String,
+      required: [true,"divison is required"],
     },
     district: {
       type:String,
-    }
+      required: [true,"district is required"],
+    },
+    thana: {
+      type:String,
+      required: [true,"thana is required"],
+    },
+    gender: {
+      type: String,
+      required: [true,"gender is required"],
+  },
+occupation: {
+      type: String,
+      required: [true,"occupation is required"],
+},
+weight:{
+      type: String,
+      required: [true,"weight is required"],
+},
+dateofbirth:{
+      type: String,
+      required: [true,"dateOfBirth is required"],
+},
   },
   { timestamps: true }
 );

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
-import { Liquid } from '@ant-design/plots';
+import { Liquid,  } from '@ant-design/plots';
+import { ConfigProvider, Space } from 'antd';
 
 const DemoLiquid = () => {
   const config = {
@@ -27,10 +28,25 @@ const DemoLiquid = () => {
     },
     color:'#b91c1c',
   };
-  return <Liquid
+  return  <ConfigProvider
+  theme={{
+    token: {
+      // Seed Token
+      colorPrimary: ' #dc2626',
+      borderRadius: 10,
+
+      // Alias Token
+      
+    },
+  }}
+>
+  <Space
+  direction="vertical"
+  > <Liquid
   height={300}
   className='bg-white rounded-lg shadow-lg shadow-gray-300'
-  {...config} />;
+  {...config} /> </Space>
+  </ConfigProvider>;
 };
 
 export default DemoLiquid;

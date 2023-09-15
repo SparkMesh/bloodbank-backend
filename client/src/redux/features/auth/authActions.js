@@ -9,7 +9,7 @@ export const userLogin = createAsyncThunk(
       const { data } = await API.post("/auth/login", { role, email, password });
       //store token
       if (data.success) {
-        alert(data.message);
+       // alert(data.message);
         localStorage.setItem("token", data.token);
         window.location.replace("/");
       }
@@ -39,7 +39,13 @@ export const userRegister = createAsyncThunk(
       hospitalName,
       website,
       divison,
-  district
+  district,
+  thana,
+  gender,
+  occupation,
+  weight,
+  dateofbirth
+
     },
     { rejectWithValue }
   ) => {
@@ -55,7 +61,12 @@ export const userRegister = createAsyncThunk(
         hospitalName,
         website,
         divison,
-  district
+  district,
+  thana,
+  gender,
+  occupation,
+  weight,
+  dateofbirth
       });
       if (data?.success) {
         alert("User Registerd Successfully");

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { Column } from '@ant-design/plots';
-
+import { ConfigProvider, Space } from 'antd';
 const DemoColumn = () => {
   const [data, setData] = useState([]);
 
@@ -32,10 +32,27 @@ const DemoColumn = () => {
     },
   };
 
-  return <Column
+  return  <ConfigProvider
+  theme={{
+    token: {
+      // Seed Token
+      colorPrimary: ' #dc2626',
+      borderRadius: 10,
+
+      // Alias Token
+      
+    },
+  }}
+>
+  <Space
+  direction="vertical"
+  >
+    <Column
   height={300}
   className='bg-white rounded-lg shadow-lg shadow-gray-300 p-2'
-  {...config} />;
+  {...config} /></Space>
+  </ConfigProvider>;
+
 };
 
 export default DemoColumn

@@ -25,7 +25,12 @@ export const handleRegister = (
   hospitalName,
   website,
   divison,
-  district
+  district,
+  thana,
+  gender,
+  occupation,
+  weight,
+  dateofbirth
 ) => {
   e.preventDefault();
   try {
@@ -41,7 +46,12 @@ export const handleRegister = (
         hospitalName,
         website,
         divison,
-  district
+  district,
+  thana,
+  gender,
+  occupation,
+  weight,
+  dateofbirth
       })
     );
   } catch (error) {

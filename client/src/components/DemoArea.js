@@ -1,7 +1,7 @@
 import React, { useState, useEffect,useRef } from 'react';
 import ReactDOM from 'react-dom';
 import { Area } from '@ant-design/plots';
-
+import { ConfigProvider, Space } from 'antd';
 const DemoArea = () => {
   const [data, setData] = useState([]);
   const ref = useRef(null);
@@ -26,10 +26,25 @@ const DemoArea = () => {
     },
   };
 
-  return <Area 
+  return  <ConfigProvider
+  theme={{
+    token: {
+      // Seed Token
+      colorPrimary: ' #dc2626',
+      borderRadius: 10,
+
+      // Alias Token
+      
+    },
+  }}
+>
+  <Space
+  direction="vertical"
+  ><Area 
   height={300}
   className='bg-white p-2 rounded-lg shadow-lg shadow-gray-300'
-  ref={ref} {...config} />;
+  ref={ref} {...config} /> </Space>
+  </ConfigProvider>;
 };
 
 export default DemoArea;

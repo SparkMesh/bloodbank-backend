@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import InputType from "./../Form/InputType";
 import API from "./../../../services/API";
-import { Button,Modal as AntMod,Dropdown,Radio,Input,AutoComplete } from 'antd';
+import { Button,Modal as AntMod,Dropdown,Radio,Input,AutoComplete,ConfigProvider, Space } from 'antd';
 import { useEffect } from "react";
 
 const Modal = ({isModal,handleCancel,showModal,handleOk}) => {
@@ -12,7 +12,7 @@ const Modal = ({isModal,handleCancel,showModal,handleOk}) => {
   const [email, setEmail] = useState("");
   const [divison,setDivison] = useState("")
   const [district,setDistrict] = useState()
-
+ const [thana,setThana] = useState("")
   const options = [
     { value: 'Rajshahi'},
     { value: 'Dhaka' },
@@ -133,7 +133,8 @@ const [bloodGroup, setBloodGroup] = useState(items[0].label);
         bloodGroup,
         quantity,
         divison,
-        district
+        district,
+        thana,
       });
       if (data?.success) {
         alert("New Record Created");
@@ -154,6 +155,21 @@ const [bloodGroup, setBloodGroup] = useState(items[0].label);
   return (
     <>
       {/* Modal */}
+      <ConfigProvider
+        theme={{
+          token: {
+            // Seed Token
+            colorPrimary: ' #dc2626',
+            borderRadius: 10,
+    
+            // Alias Token
+            
+          },
+        }}
+      >
+        <Space
+        direction="vertical"
+        >
       <AntMod open={isModalOpen} 
       okText={<p className=" text-black">Submit</p>}
       okButtonProps={{className:"border-1 border-gray-300 rounded-lg",type:"default"}}
@@ -254,11 +270,20 @@ const [bloodGroup, setBloodGroup] = useState(items[0].label);
         }
         placeholder="District"
       />
+      Thana: {"  "}
+       <Input
+                placeholder="Thana"
+                inputType={"text"}
+                value={thana}
+                onChange={(e) => setThana(e.target.value)}
+              />
                   </div>:<p>Select Division First!</p> } 
            
           </div>
         </div>
       </AntMod>
+      </Space>
+  </ConfigProvider>
     </>
   );
 };

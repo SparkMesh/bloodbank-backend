@@ -14,31 +14,25 @@ const AdminHome = () => {
           <h3>Manage Blood Bank App </h3>
           <hr />
           <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad
-            explicabo animi blanditiis incidunt dicta quia, quibusdam facere
-            corporis! Dolores, reprehenderit cum sed repellat laudantium
-            architecto natus est nostrum accusamus, odio aspernatur minima
-            fugiat quam molestiae nisi. Temporibus impedit dolorem quia.
-            Distinctio modi non excepturi illo odio voluptatum quae nostrum a
-            temporibus sequi! Explicabo, quasi consequatur ad qui quos labore
-            distinctio voluptates alias nostrum ab dicta aspernatur molestias
-            adipisci quibusdam error ipsa. Totam, tenetur dolores eaque tempora
-            officiis deserunt assumenda? Rerum nemo est nihil laudantium
-            necessitatibus. Possimus, voluptatem voluptates blanditiis quas
-            aspernatur, quam, quaerat minus maiores ipsam sint perferendis
-            dolor. Dignissimos voluptatem doloribus sint in quis omnis, atque
-            neque praesentium voluptatum suscipit. Quas esse, accusantium maxime
-            obcaecati iure officiis aperiam minus alias quod cum quos qui
-            voluptatibus, numquam, ad id dolore odit! Minima laudantium sunt,
-            explicabo nesciunt quos voluptatibus qui libero eligendi praesentium
-            debitis obcaecati similique assumenda nobis labore totam dolore
-            perferendis adipisci fugiat quibusdam tempore doloremque voluptatum
-            accusantium. Accusamus, incidunt sequi. Esse sunt officia fuga,
-            officiis saepe tempora repellat suscipit aliquid cupiditate
-            perferendis, asperiores architecto molestiae rem iste eaque
-            molestias reiciendis. Laborum modi asperiores, reprehenderit
-            assumenda numquam, vitae exercitationem illum nesciunt, dolorum
-            deleniti accusamus consequatur id. Necessitatibus dolore ad fugit?
+          Introducing QuickDonorBD: Your Lifesaving Companion
+
+In moments of urgency and compassion, QuickDonorBD emerges as your trusted companion, designed with a singular purpose – to connect blood donors with those in need, swiftly and seamlessly. Welcome to a mobile application that stands at the forefront of humanitarian aid, bridging the gap between donors and recipients in the Bangladesh region.
+
+QuickDonorBD redefines convenience in blood donation, making it easier than ever to save lives. With a few taps on your device, you can effortlessly find donors near you, schedule donations, and create a network of lifesavers within your community. Our platform is designed to empower you with the knowledge and resources you need to act swiftly during critical situations.
+
+Key Features:
+
+Effortless Blood Donation: Register as a donor or recipient, and our app will match you with potential donors in your vicinity, eliminating the time-consuming search for blood.
+
+Real-Time Updates: Stay informed with real-time notifications about blood requests and nearby donation drives, ensuring that you are always aware of urgent needs.
+
+Secure and Confidential: Your data's privacy and security are our top priorities. All interactions are kept confidential, fostering trust among our users.
+
+Community Building: Connect with like-minded individuals who are passionate about saving lives. Build a community of donors, recipients, and volunteers dedicated to the cause.
+
+Donation History: Keep track of your donation history, making it easy to manage future contributions and monitor your impact.
+
+Join us in the noble mission of saving lives, one donation at a time. QuickDonorBD is more than just an app; it's a lifeline for those in need and an opportunity for you to make a meaningful difference. Download the app today and be a part of the QuickDonorBD family, where every drop counts, and every gesture matters. Together, we can create a healthier, more compassionate Bangladesh.
           </p>
         </div>
       </div>

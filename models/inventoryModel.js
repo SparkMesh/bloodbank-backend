@@ -48,7 +48,14 @@ const inventorySchema = new mongoose.Schema(
 
       required: [true, "divison is required"],
     },
-  },
+    thana: {
+      type: String,
+
+      required: [true, "divison is required"],
+    },
+    
+
+},
   { timestamps: true }
 );
 
