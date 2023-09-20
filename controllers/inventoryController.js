@@ -265,7 +265,7 @@ const getOrgnaisationForHospitalController = async (req, res) => {
 
 const getMatchedDonarController = async (req, res) => {
   try {
-    const { bloodGroup, district, divison,thana } = req.body;
+    const { bloodGroup, district, divison} = req.body;
     const donars = await inventoryModel.aggregate([
       {
         $match: {
@@ -273,7 +273,7 @@ const getMatchedDonarController = async (req, res) => {
           bloodGroup,
           district,
           divison,
-          thana,
+          
         },
       },
       {

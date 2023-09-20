@@ -2,6 +2,45 @@ const userModel = require("../models/userModel");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
+const updateUserController = async (req, res) => {
+  try {
+    console.error(req.body)
+    const existingUser = await userModel.findOne({ phone: req.body.phone });
+    if(existingUser){
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(req.body.password, salt);
+    req.body.password = hashedPassword;
+    const findReplace = await userModel.findOneAndUpdate({
+      phone: req.body.phone
+    },
+      req.body)
+      console.log(findReplace)
+    return res.status(200).send({
+      success: true,
+      message: "User Updated Successfully",
+      
+    });
+
+  }
+  else{
+    return res.status(200).send({
+      success: false,
+      message: "User Not Found",
+      
+    });
+  }
+
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send({
+      success: false,
+      message: "unable to update user",
+      error,
+    });
+  }
+};
+
+
 const registerController = async (req, res) => {
   try {
     const exisitingUser = await userModel.findOne({ email: req.body.email });
@@ -102,4 +141,4 @@ const currentUserController = async (req, res) => {
   }
 };
 
-module.exports = { registerController, loginController, currentUserController };
+module.exports = { registerController, loginController, currentUserController,updateUserController };

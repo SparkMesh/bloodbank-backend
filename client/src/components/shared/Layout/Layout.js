@@ -9,22 +9,39 @@ const [width,setWidth] = React.useState( menuCollapsed == 0?'full':'screen');
 
 
   return (
-    
-      <lout  className="flex flex-row w-screen h-screen overflow-y-hidden">
+    <ConfigProvider
+    theme={{
+      token: {
+        // Seed Token
+        colorPrimary: ' #dc2626',
+       
+
+        // Alias Token
         
-        <Sidebar />
+      },
+    }}
+  >
+    <Space
+    direction="vertical"
+    >
+      <lout  className="flex flex-row w-screen h-screen overflow-hidden">
+        
+      <Sidebar />
       
       <lout className={`w-screen overflow-y-scroll`}>
       <Header />
+     
         <lout.Content
-        className={` overflow-x-scroll  min-h-screen flex flex-col justify-start items-center p-2   bg-[#F5F5F5]`}
+        className={` overflow-scroll  min-h-screen flex flex-col justify-start items-center  bg-[#F5F5F5]`}
         >
           
           {children}
           
         
           </lout.Content>
-      </lout></lout>
+      </lout></lout> 
+        </Space>
+  </ConfigProvider>
     
   );
 };

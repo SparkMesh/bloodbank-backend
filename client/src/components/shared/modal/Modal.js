@@ -245,7 +245,7 @@ const [bloodGroup, setBloodGroup] = useState(items[0].label);
                 onChange={(e) => setQuantity(e.target.value)}
               />
             <div>
-                  Division :  {"  "}
+                  Division:  {"  "}
                    <AutoComplete
                    
         options={options}
@@ -259,7 +259,8 @@ const [bloodGroup, setBloodGroup] = useState(items[0].label);
                   </div>
                   
                  {divison.length>0?<div>
-                  District :  {"  "}
+                  <div className="flex gap-2 items-center flex-row">
+                  District:  {"  "}
                    <AutoComplete
                    
         options={optionDist[district]}
@@ -270,13 +271,15 @@ const [bloodGroup, setBloodGroup] = useState(items[0].label);
         }
         placeholder="District"
       />
-      Thana: {"  "}
+      
+      Thana: 
        <Input
+       className="w-[30%]"
                 placeholder="Thana"
                 inputType={"text"}
                 value={thana}
                 onChange={(e) => setThana(e.target.value)}
-              />
+              /></div>
                   </div>:<p>Select Division First!</p> } 
            
           </div>

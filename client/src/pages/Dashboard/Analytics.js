@@ -58,7 +58,10 @@ const Analytics = () => {
       <Layout
       
       >
-      <div className="grid sm:grid-cols-4  items-center justify-center grid-cols-2 gap-4 m-4">
+        <div
+        className="w-screen"
+        >
+      <div className="grid sm:grid-cols-4  items-center justify-center grid-cols-2 gap-4 mt-[75px] m-4">
         {data?.map((record, i) => (
           <Card.Grid
           
@@ -93,7 +96,7 @@ const Analytics = () => {
           </Card.Grid>
         ))}
       </div>
-      <div className="overflow-x-scroll flex flex-col justify-center items-start m-2 ">
+      <div className="overflow-scroll flex flex-col justify-start items-start m-2 ">
         <h1 className="font-bold">Recent Blood Transactions :</h1>
         <table >
           <thead >
@@ -117,6 +120,7 @@ const Analytics = () => {
             ))}
           </tbody>
         </table>
+      </div>
       </div>
       </Layout>
     </>

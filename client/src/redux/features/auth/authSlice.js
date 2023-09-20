@@ -32,7 +32,7 @@ const authSlice = createSlice({
           state.menuCollapsed=0;
         }
       }
-      console.log(state.menuCollapsed);
+      //console.log(state.menuCollapsed);
     },
   },
   extraReducers: (builder) => {

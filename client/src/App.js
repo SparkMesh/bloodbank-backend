@@ -15,8 +15,10 @@ import Donation from "./pages/Donation";
 import Analytics from "./pages/Dashboard/Analytics";
 import DonarList from "./pages/Admin/DonarList";
 import HospitalList from "./pages/Admin/HospitalList";
+import ReqList from "./pages/Admin/ReqList";
 import OrgList from "./pages/Admin/OrgList";
 import AdminHome from "./pages/Admin/AdminHome";
+import Profile from "./pages/Dashboard/Profile";
 import { Fragment } from "react";
 function App() {
   return (
@@ -54,6 +56,14 @@ function App() {
           element={
             <ProtectedRoute>
               <OrgList />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/request-list"
+          element={
+            <ProtectedRoute>
+              <ReqList />
             </ProtectedRoute>
           }
         />
@@ -111,6 +121,14 @@ function App() {
           element={
             <ProtectedRoute>
               <HomePage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <Profile />
             </ProtectedRoute>
           }
         />
