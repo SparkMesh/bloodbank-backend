@@ -31,7 +31,7 @@ const FormComponent = ({ formType, submitBtn, formTitle,style }) => {
   const [hospitalName, setHospitalName] = useState("");
   const [website, setWebsite] = useState("");
   const [address, setAddress] = useState("");
-  const [phone, setPhone] = useState("");
+  const [phone, setPhone] = useState("+880");
   const [divison, setDivison] = useState("");
   const [district, setDistrict] = useState();
   const [thana, setThana] = useState("");
@@ -500,6 +500,7 @@ const FormComponent = ({ formType, submitBtn, formTitle,style }) => {
                     inputType={"text"}
                     name={"phone"}
                     value={phone}
+                    defaultValue={"+880"}
                     style={"rounded-r-none"}
                     onChange={(e) => setPhone(e.target.value)}
                   />
@@ -509,7 +510,7 @@ const FormComponent = ({ formType, submitBtn, formTitle,style }) => {
                    type="primary"
                     htmlType="button"
                     size="middle"
-                   className="bg-red-600 rounded-l-none absolute bottom-[24px] right-0"
+                   className="bg-red-600 rounded-l-none absolute bottom-[24px] right-3"
                     onClick={() => {
                       sendCode();
                      // openModal();
@@ -519,6 +520,9 @@ const FormComponent = ({ formType, submitBtn, formTitle,style }) => {
                     {isVerified ? "Verified" : "Verify"}
                    
                   </Button>
+                  <p
+                  className="text-red-600 font-bold ml-6 "
+                  >*</p>
                   </div>
                   Gender
                   <Radio.Group

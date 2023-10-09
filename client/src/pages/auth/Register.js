@@ -29,6 +29,7 @@ const Register = () => {
       >
         <Space
         direction="vertical"
+        className="bg-red-600"
         >
         <div  style={{
           boxShadow: "0px -5px 40px -10px rgba(0,0,0,0.75)",

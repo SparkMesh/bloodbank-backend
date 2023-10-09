@@ -26,6 +26,7 @@ const AdminLogin = () => {
       >
         <Space
         direction="vertical"
+        className="bg-red-600"
         >
         <div
         style={{

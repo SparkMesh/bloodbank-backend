@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {Input,Form,ConfigProvider, Space  } from "antd";
 const InputType = ({
   labelText,
@@ -9,6 +9,11 @@ const InputType = ({
   name,
   style,
 }) => {
+  const [isRequired,setIsRequired] = React.useState(true)
+  useEffect(() => {
+  if(labelText === "Phone" || labelText === "Occupation"){
+    setIsRequired(false)
+  }})
   return (
     <>
      <ConfigProvider
@@ -44,7 +49,7 @@ const InputType = ({
           onChange={onChange}
         />  
         
-        </Form.Item>{labelText !== "Occupation" && <p className="text-red-600 mx-2 font-bold">*</p>}
+        </Form.Item>{isRequired && <p className="text-red-600 mx-2 font-bold">*</p>}
       </div>
       </Space>
   </ConfigProvider>
