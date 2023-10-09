@@ -291,6 +291,7 @@ const Profile = () => {
                     fullscreen={false}
                     onChange={(e)=>setDayjsofBirth(dayjs(e.target.value))}
                     defaultValue={dayjs(dateOfBirth)}
+                    value={dayjs(dateOfBirth)}
 
                     />
                 </Form.Item>

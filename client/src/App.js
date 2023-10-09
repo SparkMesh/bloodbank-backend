@@ -3,7 +3,7 @@ import HomePage from "./pages/HomePage";
 import Login from "./pages/auth/Login";
 import AdminLogin from "./pages/auth/AdminLogin";
 import Register from "./pages/auth/Register";
-import { ToastContainer } from "react-toastify";
+
 import "react-toastify/dist/ReactToastify.css";
 import ProtectedRoute from "./components/Routes/ProtectedRoute";
 import PublicRoute from "./components/Routes/PublicRoute";
@@ -17,6 +17,7 @@ import DonarList from "./pages/Admin/DonarList";
 import HospitalList from "./pages/Admin/HospitalList";
 import ReqList from "./pages/Admin/ReqList";
 import OrgList from "./pages/Admin/OrgList";
+import RecordList from "./pages/Admin/RecordList";
 import AdminHome from "./pages/Admin/AdminHome";
 import Profile from "./pages/Dashboard/Profile";
 import { Fragment } from "react";
@@ -43,14 +44,14 @@ function App() {
             </ProtectedRoute>
           }
         />
-        <Route
+        {/* <Route
           path="/hospital-list"
           element={
             <ProtectedRoute>
               <HospitalList />
             </ProtectedRoute>
           }
-        />
+        /> */}
         <Route
           path="/org-list"
           element={
@@ -76,14 +77,14 @@ function App() {
             </ProtectedRoute>
           }
         />
-        <Route
+        {/* <Route
           path="/recentrecords"
           element={
             <ProtectedRoute>
               <Analytics />
             </ProtectedRoute>
           }
-        />
+        /> */}
         <Route
           path="/consumer"
           element={
@@ -154,6 +155,14 @@ function App() {
             <PublicRoute>
               <AdminLogin />
             </PublicRoute>
+          }
+        />
+        <Route
+          path="/record-list"
+          element={
+            <ProtectedRoute>
+              <RecordList />
+            </ProtectedRoute>
           }
         />
       </Routes>

@@ -42,7 +42,9 @@ const InputType = ({
           name={name}
           value={value}
           onChange={onChange}
-        />  </Form.Item>
+        />  
+        
+        </Form.Item>{labelText !== "Occupation" && <p className="text-red-600 mx-2 font-bold">*</p>}
       </div>
       </Space>
   </ConfigProvider>

@@ -20,7 +20,7 @@ import
 import { Dropdown,Badge, Space } from 'antd';
 import { Breadcrumb, Layout, Menu, theme,Button,Skeleton } from 'antd';
 
-const { Content, Footer, Sider } = Layout;
+
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -51,22 +51,7 @@ const Header = () => {
     getItem((<button className="" onClick={handleLogout}>
     Logout
   </button>), '3', <UserOutlined />)
-   , getItem((location.pathname === "/" ||
-    location.pathname === "/donar" ||
-    location.pathname === "/hospital" ? (
-     
-        <Link to="/recentrecords" className="">
-          Recent Records
-        </Link>
-      
-    ) : (
-      <>
-      {user ? (<Link to={user.role === "admin"?"/admin":"/"} className="">
-      Home
-    </Link>):<Skeleton.Button/>}</>
-        
-      
-    )), '2', <DesktopOutlined />),
+   
   
 
     
@@ -128,7 +113,7 @@ const Header = () => {
               <div className="flex flex-row items-center "><UserOutlined/>
              <p className=" ml-2"><Badge.Ribbon 
     className="opacity-70 -mt-6 -mr-1 text-[12px]  rounded-full"
-    text={user?.role} color="#be123c">  
+    text={user?.role == "donar"?"donor":user.role} color="#be123c">  
     <p className="text-lg">
     {user?.name || user?.hospitalName || user?.organisationName}
     </p>

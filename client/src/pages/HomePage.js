@@ -20,8 +20,10 @@ const HomePage = () => {
   const { loading, error, user } = useSelector((state) => state.auth);
  const [bloodReqOpen, setBloodReqOpen] = useState(false);
   const [data, setData] = useState([]);
+  const [TotalEntry, setTotalEntry] = useState(0);
+const [TotalEntryEachMonth, setTotalEntryEachMonth] = useState(null);
   const navigate = useNavigate();
-  const [ColumnData, setColumnData] = useState([]);
+  const [ColumnData,setColumnData] = useState([]);
   const [isModal, setIsModalOpen] = useState(false);
   const [name, setName] = useState("");
   
@@ -219,12 +221,12 @@ const [ReqSubmitLoading, setReqSubmitLoading] = useState(false);
       key: 'InventoryType',
     },
     {
-      title: 'Quantity',
+      title: 'Last Donated (month)',
       dataIndex: 'Quantity',
       key: 'Quantity',
     },
     {
-      title: 'Donor Email',
+      title: 'Donor Phone',
       dataIndex: 'DonarEmail',
       key: 'DonarEmail',
     },
@@ -240,7 +242,8 @@ const [ReqSubmitLoading, setReqSubmitLoading] = useState(false);
     try {
       const { data } = await API.get("/inventory/get-inventory");
       if (data?.success) {
-       // setData(data?.inventory);
+       // setData(data?.inventory);\
+        console.log(data.inventory);
        data.inventory.map(
 
           (record) => {
@@ -248,14 +251,14 @@ const [ReqSubmitLoading, setReqSubmitLoading] = useState(false);
             key: record._id,
             BloodGroup: record.bloodGroup,
             InventoryType: record.inventoryType,
-            Quantity: record.quantity,
-            DonarEmail: record.email,
+            Quantity: record.lastDonateMonth,
+            DonarEmail: record.phone,
             TimeDate: moment(record.createdAt).format("DD/MM/YYYY hh:mm A")
           })
         }
         
         )
-        setData(ColumnData);
+        setColumnData(ColumnData);
        
       }
     } catch (error) {
@@ -267,28 +270,38 @@ const [ReqSubmitLoading, setReqSubmitLoading] = useState(false);
     getBloodRecords();
 
   }, []);
-  return (
-    <ConfigProvider
-  theme={{
-    token: {
-      // Seed Token
-      colorPrimary: ' #dc2626',
-      borderRadius: 10,
 
-      // Alias Token
-      
-    },
-  }}
->
-  <Space
-  direction="vertical"
-  >
+  const getBloodGroupData = async () => {
+    try {
+      const { data } = await API.get("/analytics/bloodGroups-data");
+      if (data?.success) {
+        setData(data?.bloodGroupData);
+        setTotalEntry(data?.totalEntry);
+        setTotalEntryEachMonth(data?.totalEntryEachMonth);
+         console.log(data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    if(data.length==0){
+    getBloodGroupData();}
+  }, []);
+
+  if(data.length==0){
+    return <div
+    className="w-screen h-screen flex justify-center items-center"
+    ><Spinner/></div>
+  }
+  else
+  return (
+   
     <Layout
     
-
     >
       <div
-      className="mt-[65px]"
+     
       >
       
       {user?.role === "admin" && navigate("/admin")}
@@ -347,7 +360,7 @@ const [ReqSubmitLoading, setReqSubmitLoading] = useState(false);
             }
           }
           >
- 
+ <div className="flex">
                 Blood Group: &nbsp;
                 <Dropdown
                 
@@ -366,9 +379,9 @@ const [ReqSubmitLoading, setReqSubmitLoading] = useState(false);
                 //onChange={(e) => setBloodGroup(e.target.value)}
               >
                <Button>{bloodGroup}</Button>
-              </Dropdown>
-              <br/>
-              Quantity:  {"  "}
+              </Dropdown><p className="text-red-600 mx-2 font-bold"> * </p></div>
+              <br/><p className="flex">
+              Quantity (ml):  {"  "} <p className="text-red-600 mx-2 font-bold"> * </p></p>
               <Input
               placeholder="Quantity"
               value={quantity}
@@ -377,9 +390,9 @@ const [ReqSubmitLoading, setReqSubmitLoading] = useState(false);
 
               />
              
-    
+             <p className="flex">
              
-            Name:  {"  "}
+            Name:  {"  "} <p className="text-red-600 mx-2 font-bold"> * </p></p>
              <Input
              placeholder="Name"
               value={name}
@@ -398,7 +411,9 @@ const [ReqSubmitLoading, setReqSubmitLoading] = useState(false);
               value={weight}
               onChange={(e) => setWeight(e.target.value)}
               />
-              Reason: {"  "}
+               <p className="flex">
+             
+               Reason: {"  "} <p className="text-red-600 mx-2 font-bold"> * </p></p>
               <Input
               placeholder="Reason"
               value={reason}
@@ -408,7 +423,10 @@ const [ReqSubmitLoading, setReqSubmitLoading] = useState(false);
               Gender: {"  "}
               
               <ReqDroDown setGender={setGender}/> </div>
-              Phone: {"  "}
+            
+              <p className="flex">
+             
+              Phone: {"  "} <p className="text-red-600 mx-2 font-bold"> * </p></p>
               <Input
               className="mb-2"
               placeholder="Phone"
@@ -416,7 +434,9 @@ const [ReqSubmitLoading, setReqSubmitLoading] = useState(false);
               onChange={(e) => setPhone(e.target.value)}
 
               />
-              Divison: {"  "}
+             
+              <p className="flex">
+              Divison: {"  "} <p className="text-red-600 mx-2 font-bold"> * </p></p>
               <AutoComplete
                     className="w-[30%] mr-2"
                       options={options}
@@ -429,7 +449,10 @@ const [ReqSubmitLoading, setReqSubmitLoading] = useState(false);
                       }
                       placeholder="Division"
                     />
-              District: {"  "}
+             
+              <p className="flex">
+             
+              District: {"  "}<p className="text-red-600 mx-2 font-bold"> * </p></p>
               <AutoComplete
                         options={optionDist[district]}
                        className="w-[30%]"
@@ -445,15 +468,22 @@ const [ReqSubmitLoading, setReqSubmitLoading] = useState(false);
                             .indexOf(inputValue.toUpperCase()) !== -1
                         }
                         placeholder="District"
-                      />
-              Thana: {"  "}
+                      /><br></br>
+                      
+                  
+                   <p className="flex">
+             
+                   Thana: {"  "} <p className="text-red-600 mx-2 font-bold"> * </p></p>
               <Input
               placeholder="Thana"
               value={thana}
               onChange={(e) => setThana(e.target.value)}
 
               />
-              Address: {"  "}
+              
+              <p className="flex">
+             
+              Address: {"  "} <p className="text-red-600 mx-2 font-bold"> * </p></p>
               <Input
               placeholder="Address"
               value={address}
@@ -478,7 +508,7 @@ const [ReqSubmitLoading, setReqSubmitLoading] = useState(false);
 
             >
             
-              Add Inventory
+              Add Donor
             </Button>
             <Button
               className="right-0 m-2 bg-white"
@@ -495,11 +525,12 @@ setBloodReqOpen(true)
             </div>
             <div className="grid w-[80vw] h-90 mb-20 grid-cols-1  sm:grid-cols-2 lg:grid-cols-4 items-center gap-8 m-2">
             <Slider/>
-            <DemoPie />
-         <DemoArea/>
-         <Calendar/>
+            <DemoPie bloodGroupData={data} />
+         <DemoArea totalEntry={TotalEntry}/>
+         <BarChart totalEntryEachMonth={TotalEntryEachMonth}/>
         
-         <BarChart/>
+         
+         <Calendar/>
             </div>
             <Table 
             className="w-[90vw] bg-white mb-5  overflow-scroll"
@@ -513,15 +544,14 @@ setBloodReqOpen(true)
             //   }
             // }
             
-            bordered columns={columns} dataSource={data} />
+            bordered columns={columns} dataSource={ColumnData} />
 
             <Modal isModal={isModal} showModal={showModal} handleOk={handleOk} handleCancel={handleCancel} />
           </div>
         </>
       )}
       </div>
-    </Layout></Space>
-  </ConfigProvider>
+    </Layout>
   );
 };
 

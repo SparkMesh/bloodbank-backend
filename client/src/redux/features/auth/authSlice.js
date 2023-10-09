@@ -10,7 +10,7 @@ const initialState = {
   user: null,
   token,
   error: null,
-  menuCollapsed: window.innerWidth<768? -1:0 ,
+  menuCollapsed: 0 ,
 };
 
 const authSlice = createSlice({
@@ -18,20 +18,12 @@ const authSlice = createSlice({
   initialState: initialState,
   reducers: {
     toggleMenuCollapsed: (state) => {
-      state.menuCollapsed = state.menuCollapsed+1;
-      if(window.innerWidth<768){
-      if(state.menuCollapsed==0){
-        state.menuCollapsed=1;
-      }
-    else if(state.menuCollapsed==2){
-      state.menuCollapsed=-1;
-    }
-  }
-      else{
-        if(state.menuCollapsed>1){
-          state.menuCollapsed=0;
-        }
-      }
+      if(state.menuCollapsed == 0){
+        state.menuCollapsed = 1}
+      else
+
+      state.menuCollapsed = 0
+     
       //console.log(state.menuCollapsed);
     },
   },

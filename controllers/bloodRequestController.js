@@ -36,11 +36,37 @@ const createReqInventoryController = async (req, res) => {
 const getReqInventoryController = async (req, res) => {
 
     try {
-        const bloodRequest = await bloodRequestModel.find();
+
+        if(req.body.userId){
+        var bloodRequest = null
+        //console.log(req.body)
+        const user = await userModel.findOne({ _id: req.body.userId });
+        if (!user) {
+            throw new Error("User Not Found");
+        }
+        //console.log(user)
+        if(user.role === "donar" || user.role === "organisation"){
+            console.log("donar")
+bloodRequest = await bloodRequestModel.find({ user_id: req.body.userId });
+        }
+        else
+        {
+            bloodRequest = await bloodRequestModel.find();
+        }
+       
         res.status(200).json({
             status: "success",
             data: bloodRequest,
         });
+    }
+    else {
+        bloodRequest = await bloodRequestModel.find();
+        res.status(200).json({
+            status: "success",
+            data: bloodRequest,
+        });
+
+    }
     } catch (error) {
         res.status(400).json({
             status: "fail",

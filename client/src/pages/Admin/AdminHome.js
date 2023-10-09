@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Spinner from "../../components/shared/Spinner";
@@ -15,6 +15,7 @@ import DemoLiquid from "../../components/DemoLiquid";
 import Calendar from "../../components/Calendar";
 import Slider from "../../components/Slider";
 import BarChart from "../../components/BarChart"
+
 
 const HomePage = () => {
   const { loading, error, user } = useSelector((state) => state.auth);
@@ -38,6 +39,8 @@ const HomePage = () => {
   const [ReqBloodGroup, setReqBloodGroup] = useState("");
   const [quantity, setQuantity] = useState("");
 const [ReqSubmitLoading, setReqSubmitLoading] = useState(false);
+const [TotalEntry, setTotalEntry] = useState(0);
+const [TotalEntryEachMonth, setTotalEntryEachMonth] = useState(null);
   const onSelect = (data) => {
     //console.log(optionDist);
 
@@ -210,7 +213,29 @@ const [ReqSubmitLoading, setReqSubmitLoading] = useState(false);
  
  
   //get function
-
+  const getBloodGroupData = async () => {
+    try {
+      const { data } = await API.get("/analytics/bloodGroups-data");
+      if (data?.success) {
+        setData(data?.bloodGroupData);
+        setTotalEntry(data?.totalEntry);
+        setTotalEntryEachMonth(data?.totalEntryEachMonth);
+         console.log(data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    if(data.length==0){
+    getBloodGroupData();}
+  }, []);
+  if(data.length==0){
+    return <div
+    className="w-screen h-screen flex justify-center items-center"
+    ><Spinner/></div>
+  }
+  else
   return (
     <ConfigProvider
   theme={{
@@ -232,7 +257,7 @@ const [ReqSubmitLoading, setReqSubmitLoading] = useState(false);
 
     >
       <div
-      className="mt-[65px]"
+      className="mt-[15px]"
       >
      
      
@@ -308,7 +333,7 @@ const [ReqSubmitLoading, setReqSubmitLoading] = useState(false);
                <Button>{bloodGroup}</Button>
               </Dropdown>
               <br/>
-              Quantity:  {"  "}
+              Quantity (ml):  {"  "}
               <Input
               placeholder="Quantity"
               value={quantity}
@@ -385,7 +410,7 @@ const [ReqSubmitLoading, setReqSubmitLoading] = useState(false);
                             .indexOf(inputValue.toUpperCase()) !== -1
                         }
                         placeholder="District"
-                      />
+                      /><br></br>
               Thana: {"  "}
               <Input
               placeholder="Thana"
@@ -418,7 +443,7 @@ const [ReqSubmitLoading, setReqSubmitLoading] = useState(false);
 
             >
             
-              Add Inventory
+              Add Donor
             </Button>
             <Button
               className="right-0 m-2 bg-white"
@@ -435,11 +460,12 @@ setBloodReqOpen(true)
             </div>
             <div className="grid w-[80vw] h-90 mb-20 grid-cols-1  sm:grid-cols-2 lg:grid-cols-4 items-center gap-8 m-2">
             <Slider/>
-            <DemoPie />
-         <DemoArea/>
+            <DemoPie bloodGroupData={data} />
+         <DemoArea totalEntry={TotalEntry}/>
+         <BarChart totalEntryEachMonth={TotalEntryEachMonth}/>
          <Calendar/>
         
-         <BarChart/>
+        
             </div>
           
 

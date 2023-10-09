@@ -3,11 +3,47 @@ import Layout from "./../../components/shared/Layout/Layout";
 import moment from "moment";
 import { useSelector } from "react-redux";
 import API from "../../services/API";
+import { Table } from "antd";
 
 const OrganisationPage = () => {
   // get current user
   const { user } = useSelector((state) => state.auth);
   const [data, setData] = useState([]);
+  const ColumnData = []
+  const columns = [
+    {
+      title: 'Name',
+      dataIndex: 'BloodGroup',
+      key: 'BloodGroup',
+    },
+    {
+      title: 'Phone',
+      dataIndex: 'InventoryType',
+      key: 'InventoryType',
+    },
+    {
+      title: 'Email',
+      dataIndex: 'Quantity',
+      key: 'Quantity',
+    },
+    
+    {
+      title: "District",
+      dataIndex: "District",
+      key: "District",
+
+    },
+    {
+      title: "Address",
+      dataIndex: "Address",
+      key: "Address",
+    },
+    {
+      title: 'Time & Date',
+      dataIndex: 'TimeDate',
+      key: 'TimeDate',
+    }
+  ];
   //find org records
   const getOrg = async () => {
     try {
@@ -15,7 +51,24 @@ const OrganisationPage = () => {
         const { data } = await API.get("/inventory/get-orgnaisation");
         //   console.log(data);
         if (data?.success) {
-          setData(data?.organisations);
+        
+          data.inventory.map(
+ 
+            (record) => {
+              ColumnData.push({
+              key: record._id,
+              BloodGroup: record.organisationName,
+              InventoryType: record.phone,
+              Quantity: record.email,
+              
+              District: record.division,
+              Address: record.address,
+              TimeDate: moment(record.createdAt).format("DD/MM/YYYY hh:mm A")
+            })
+          }
+          
+          )
+          setData(ColumnData);
         }
       }
       if (user?.role === "hospital") {
@@ -34,33 +87,23 @@ const OrganisationPage = () => {
 
   useEffect(() => {
     getOrg();
-  }, [user]);
+  }, []);
 
   return (
     <Layout>
-      <table className="table ">
-        <thead>
-          <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Email</th>
-            <th scope="col">Phone</th>
-            <th scope="col">Address</th>
-            <th scope="col">Date</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data?.map((record) => (
-            <tr key={record._id}>
-              
-              <td>{record.organisationName}</td>
-              <td>{record.email}</td>
-              <td>{record.phone}</td>
-              <td>{record.address}</td>
-              <td>{moment(record.createdAt).format("DD/MM/YYYY hh:mm A")}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <Table 
+            className="w-[90vw] bg-white mb-5  overflow-scroll"
+            // pagination={
+            //   {
+            //     defaultCurrent:1, 
+            //     total:50,
+            //     showSizeChanger:true,
+            //     showQuickJumper:true,
+
+            //   }
+            // }
+            
+            bordered columns={columns} dataSource={data} />
     </Layout>
   );
 };

@@ -72,7 +72,7 @@ type:String,
   },
 occupation: {
       type: String,
-      required: [true,"occupation is required"],
+      
 },
 weight:{
       type: String,

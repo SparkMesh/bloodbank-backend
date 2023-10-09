@@ -2,33 +2,33 @@ import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { Column } from '@ant-design/plots';
 import { ConfigProvider, Space } from 'antd';
-const DemoColumn = () => {
+const DemoColumn = ({totalEntryEachMonth}) => {
   const [data, setData] = useState([]);
-
   useEffect(() => {
-    asyncFetch();
+   if(data.length === 0 && totalEntryEachMonth){
+    totalEntryEachMonth.map((item)=>{
+      item._id = `${item._id}/${currentYear}`
+   })
+    setData(totalEntryEachMonth)
+   
+   
+   ;}
   }, []);
-
-  const asyncFetch = () => {
-    fetch('https://gw.alipayobjects.com/os/bmw-prod/be63e0a2-d2be-4c45-97fd-c00f752a66d4.json')
-      .then((response) => response.json())
-      .then((json) => setData(json))
-      .catch((error) => {
-        console.log('fetch data failed', error);
-      });
-  };
+const date = new Date();
+const currentYear = date.getFullYear();
+ 
   const config = {
     data,
-    xField: '城市',
-    yField: '销售额',
+    xField: `_id`,
+    yField: 'count',
     xAxis: {
       label: {
         autoRotate: false,
       },
     },
     slider: {
-      start: 0.1,
-      end: 0.2,
+      start: 0,
+      end: 1,
     },
   };
 

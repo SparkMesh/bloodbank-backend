@@ -3,7 +3,8 @@ const {
   registerController,
   loginController,
   currentUserController,
-  updateUserController
+  updateUserController,
+  
 } = require("../controllers/authController");
 const authMiddelware = require("../middlewares/authMiddelware");
 

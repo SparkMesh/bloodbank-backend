@@ -2,16 +2,62 @@ import React, { useEffect, useState } from "react";
 import Layout from "../../components/shared/Layout/Layout";
 import moment from "moment";
 import API from "../../services/API";
-
+import { Table,Button } from "antd";
 const OrgList = () => {
   const [data, setData] = useState([]);
   //find donar records
+  const ColumnData = [];
+  const columns = [
+  {
+    title: 'Name',
+    dataIndex: 'Name',
+    key: 'Name',
+
+  },
+  {
+  title: 'Email',
+  dataIndex: 'Email',
+  key: 'Email',
+  },
+  {
+  title: 'Phone',
+  dataIndex: 'Phone',
+
+  key: 'Phone',
+  },
+  {
+    title: 'Date',
+    dataIndex: 'Date',
+    key: 'Date',
+  },
+  {
+  title: 'Action',
+  dataIndex: 'Action',
+  key: 'Action',
+  }
+  ]
   const getDonars = async () => {
     try {
       const { data } = await API.get("/admin/org-list");
       console.log(data);
       if (data?.success) {
         setData(data?.orgData);
+        data.orgData.map(
+        
+          (record) => {
+
+            ColumnData.push({
+            key: record._id,
+            Name: record.organisationName,
+            Email: record.email,
+            Phone: record.phone,
+            Date: moment(record.createdAt).format("DD/MM/YYYY hh:mm A"),
+            Action: <Button
+            className="bg-red-500 text-white"
+            onClick={() => handelDelete(record._id)}>Delete</Button>
+          })
+          }
+          )
       }
     } catch (error) {
       console.log(error);
@@ -40,35 +86,7 @@ const OrgList = () => {
 
   return (
     <Layout>
-      <table className="table ">
-        <thead>
-          <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Email</th>
-            <th scope="col">Phone</th>
-            <th scope="col">Date</th>
-            <th scope="col">Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data?.map((record) => (
-            <tr key={record._id}>
-              <td>{record.organisationName}</td>
-              <td>{record.email}</td>
-              <td>{record.phone}</td>
-              <td>{moment(record.createdAt).format("DD/MM/YYYY hh:mm A")}</td>
-              <td>
-                <button
-                  className="btn btn-danger"
-                  onClick={() => handelDelete(record._id)}
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <Table className="w-[90vw] bg-white mx-5  overflow-scroll" columns={columns} dataSource={ColumnData} />
     </Layout>
   );
 };

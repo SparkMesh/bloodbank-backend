@@ -2,34 +2,45 @@ import React, { useState, useEffect,useRef } from 'react';
 import ReactDOM from 'react-dom';
 import { Pie } from '@ant-design/plots';
 
-const DemoPie = () => {
+const DemoPie = ({bloodGroupData}) => {
+
     const ref = useRef(null);
-  const data = [
+  const data = 
+  [
     {
       type: 'O+',
-      value: 27,
+      value: bloodGroupData ? bloodGroupData[0].totalEntry: 0,
     },
     {
       type: 'O-',
-      value: 25,
+      value: bloodGroupData ? bloodGroupData[1]?.totalEntry : 0,
     },
     {
       type: 'A+',
-      value: 18,
+      value: bloodGroupData ? bloodGroupData[2]?.totalEntry : 0,
     },
     {
       type: 'A-',
-      value: 15,
+      value: bloodGroupData ? bloodGroupData[3]?.totalEntry : 0,
     },
     {
       type: 'B+',
-      value: 10,
+      value: bloodGroupData ? bloodGroupData[4]?.totalEntry : 0,
     },
     {
       type: 'B-',
-      value: 5,
+      value: bloodGroupData ? bloodGroupData[5]?.totalEntry : 0,
     },
+    {
+      type: 'AB+',
+      value: bloodGroupData ? bloodGroupData[6]?.totalEntry : 0,
+    },
+    {
+      type: 'AB-',
+      value: bloodGroupData ? bloodGroupData[7]?.totalEntry : 0,
+    }
   ];
+  console.log(data.length)
   const config = {
     appendPadding: 10,
     data,
@@ -66,6 +77,9 @@ const DemoPie = () => {
       },
     },
   };
+ 
+   
+  
   return <Pie 
   height={300}
   className='bg-white rounded-lg   shadow-lg shadow-gray-300'

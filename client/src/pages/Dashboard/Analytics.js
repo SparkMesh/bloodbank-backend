@@ -70,7 +70,7 @@ const Analytics = () => {
             style={{  backgroundColor: `${colors[i]}` }}
           >
             <div className="card-body">
-            <p className="text-white font-bold  ">{record.bloodGroup}</p>
+            <p className="text-white font-bold  ">{record?.bloodGroup}</p>
             <motion.div
             initial={{
               width:0
@@ -84,20 +84,20 @@ const Analytics = () => {
             className="w-full border-b-2 border-gray-300 rounded-full "
             />
               <p className="card-text">
-                Total In : <b>{record.totalIn}</b> (ML)
+                Total In : <b>{record?.totalIn}</b> (ML)
               </p>
               <p className="card-text">
-                Total Out : <b>{record.totalOut}</b> (ML)
+                Total Out : <b>{record?.totalOut}</b> (ML)
               </p>
             </div>
             <div className="card-footer text-light bg-dark text-center">
-              Total Available : <b>{record.availabeBlood}</b> (ML)
+              Total Available : <b>{record?.availabeBlood}</b> (ML)
             </div>
           </Card.Grid>
         ))}
       </div>
       <div className="overflow-scroll flex flex-col justify-start items-start m-2 ">
-        <h1 className="font-bold">Recent Blood Transactions :</h1>
+        <h1 className="font-bold">Recent Blood Transactions:</h1>
         <table >
           <thead >
             <tr>
@@ -112,9 +112,9 @@ const Analytics = () => {
             {inventoryData?.map((record) => (
               <tr key={record._id}>
                 <td className="border-r-[2px] pr-1.5">{record.bloodGroup}</td>
-                <td className="border-r-[2px] pr-1.5">{record.inventoryType}</td>
+                <td className="border-r-[2px] pr-1.5">{record.Name || record.organisationName}</td>
                 <td className="border-r-[2px] pr-1.5">{record.quantity} (ML)</td>
-                <td className="border-r-[2px] pr-1.5">{record.email}</td>
+                <td className="border-r-[2px] pr-1.5">{record.phone}</td>
                 <td className="border-r-[2px] pr-1.5">{moment(record.createdAt).format("DD/MM/YYYY hh:mm A")}</td>
               </tr>
             ))}

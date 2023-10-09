@@ -11,7 +11,9 @@ const router = express.Router();
 // ADD INVENTORY || POST
 router.post("/create-bloodRequest", authMiddelware, createReqInventoryController);
 //GET ALL BLOOD RECORDS
-router.get("/get-bloodRequest", getReqInventoryController);
+router.get("/get-bloodRequest",authMiddelware, getReqInventoryController);
+
+router.get("/get-public-bloodRequest",getReqInventoryController);
 //GET RECENT BLOOD RECORDS
 router.get("/edit-bloodRequest", authMiddelware, editReqInventoryController);
 //GET HOSPITAL BLOOD RECORDS

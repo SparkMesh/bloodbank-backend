@@ -25,6 +25,7 @@ const Register = () => {
             
           },
         }}
+
       >
         <Space
         direction="vertical"
@@ -39,6 +40,7 @@ const Register = () => {
           
          className="overflow-y-scroll overflow-hidden rounded-r-none   shadow-md shadow-gray-400 w-[300px] h-[60%] rounded-xl">
          <Form
+         
           style={'rounded-r-none'}
               formTitle={"Register"}
               submitBtn={"Register"}

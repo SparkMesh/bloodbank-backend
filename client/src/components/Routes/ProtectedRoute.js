@@ -15,6 +15,7 @@ const ProtectedRoute = ({ children }) => {
         dispatch(getCurrentUser(data));
       }
     } catch (error) {
+      
       localStorage.clear();
       console.log(error);
     }

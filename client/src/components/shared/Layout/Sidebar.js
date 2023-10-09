@@ -22,7 +22,7 @@ const dispatch = useDispatch();
   if (user?.role === "admin"){
     items.push(
       {key: '1',
-      label:"Admin"
+      label:"Dashboard"
     ,
     path:"/admin",
     icon: <BankFilled />,
@@ -30,20 +30,13 @@ const dispatch = useDispatch();
     )
     items.push(
       {key: '2',
-      label:"Donor List"
+      label:"User List"
     ,
     path:"/donar-list",
     icon: <PieChartFilled />,
     }
     )
-    items.push(
-      {key: '3',
-      label:"Hospital List"
-    ,
-    path:"/hospital-list",
-    icon: <PieChartFilled />,
-    }
-    )
+   
     items.push(
       {key: '4',
       label:"Organisation List"
@@ -59,6 +52,15 @@ const dispatch = useDispatch();
     path:"/request-list",
     icon: <PieChartFilled />,
       })
+      items.push(
+        {key: '6',
+        label:"Donor List"
+      ,
+      path:"/record-list",
+      icon: <PieChartFilled />,
+        })
+        
+
 
 
 }
@@ -68,7 +70,7 @@ const dispatch = useDispatch();
       {key: '1',
       label: 
     
-         'Inventory'
+         'Dashboard'
       
     
     
@@ -142,6 +144,12 @@ if(user?.role === "donar" ){
     path:"/donation",
     icon: <ContainerFilled />,
     })
+    items.push(
+      {key: '5',
+      label:"My Requests"
+    ,
+    path:"/request-list",
+    icon: <PieChartFilled />,})
 }
   if(user?.role === "donar" || user?.role === "hospital"){
     items.push(
@@ -164,7 +172,9 @@ if(user?.role === "donar" ){
   
   return (<AnimatePresence> 
 
- { (menuCollapsed == 0 || menuCollapsed == 1) && (
+ { (
+  //menuCollapsed == 0 || menuCollapsed == 
+  1) && (
 
 
   //    <motion.div
@@ -192,17 +202,25 @@ if(user?.role === "donar" ){
   >
    <Layout hasSider>
         <Sider
+       
+       collapsedWidth="55"
+        width="160"
+       onCollapse={(collapsed, type) => {
+         console.log(collapsed, type);
+       }} 
       
-     
+    trigger={null}
+    // zeroWidthTriggerStyle={{ top: 0, color: "red" }}
       className="flex relative  flex-col justify-between h-screen rounded-r-lg shadow-md shadow-gray-600 "
-      collapsible trigger={null} collapsed={ menuCollapsed == 1 ? false : true}
+      //collapsible trigger={null}
+       collapsed={ menuCollapsed == 1 ? false : true}
       //  onCollapse={(value) => {
       // console.log(value)
       // dispatch(toggleMenuCollapsed())}}
       
       >
         <img 
-        className="w-11 h-11 m-auto"
+        className="w-11 h-11 p-1 m-auto"
         src="/logo192.png"  />
         <Menu 
         theme="dark" mode="inline"
@@ -218,19 +236,25 @@ if(user?.role === "donar" ){
             ))}
           </Menu>
        <div
-       className="absolute h-[50px] w-full bottom-0"
+       className="absolute h-[50px] z-50 bottom-0 left-0 "
        >
         <div
-        onClick={() => dispatch(toggleMenuCollapsed())}
-        className="flex transition-all active:scale-75 active:opacity-70 justify-center items-center w-8 h-8 text-white bg-red-700  m-auto rounded-full cursor-pointer"
+        onClick={() => {dispatch(toggleMenuCollapsed())
+        console.log(menuCollapsed)
+        }}
+        className="flex z-50 shadow-sm shadow-gray-600 transition-all active:scale-75 active:opacity-70 justify-center items-center w-8 h-8 text-white bg-red-700  m-auto rounded-r-full cursor-pointer"
         >
-        {
-          !menuCollapsed ? (
-            <ArrowRightOutlined />
-            ):(
-<ArrowLeftOutlined />
-          )
-        }
+        
+           
+            <ArrowRightOutlined 
+            hidden={menuCollapsed === 0 ? false : true }
+            />
+        
+<ArrowLeftOutlined
+hidden={menuCollapsed === 1 ? false : true}
+/>
+          
+        
         </div>
         </div>
       </Sider>

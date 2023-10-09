@@ -2,17 +2,18 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import InputType from "./../Form/InputType";
 import API from "./../../../services/API";
-import { Button,Modal as AntMod,Dropdown,Radio,Input,AutoComplete,ConfigProvider, Space } from 'antd';
+import { Button,Modal as AntMod,Dropdown,Radio,Input,AutoComplete,ConfigProvider, Space, Calendar } from 'antd';
 import { useEffect } from "react";
-
+import dayjs from "dayjs";
 const Modal = ({isModal,handleCancel,showModal,handleOk}) => {
   const [inventoryType, setInventoryType] = useState("in");
- 
+ const [Name,setDonorName] = useState("")
   const [quantity, setQuantity] = useState(0);
-  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [divison,setDivison] = useState("")
   const [district,setDistrict] = useState()
  const [thana,setThana] = useState("")
+ const [lastDonateMonth,setLastDonateMonth] = useState('')
   const options = [
     { value: 'Rajshahi'},
     { value: 'Dhaka' },
@@ -123,19 +124,33 @@ setDistrict(0)
 const [bloodGroup, setBloodGroup] = useState(items[0].label);
   const handleModalSubmit = async () => {
     try {
-      if (!bloodGroup || !quantity) {
+      if (!bloodGroup || !Name || !phone || !lastDonateMonth || !divison || !district || !thana) {
         return alert("Please Provide All Fields");
       }
-      const { data } = await API.post("/inventory/create-inventory", {
-        email,
-        organisation: user?._id,
+      const postObject = {
+        phone,
+        Name,
         inventoryType,
         bloodGroup,
-        quantity,
+        lastDonateMonth,
         divison,
         district,
         thana,
-      });
+      };  
+      if (user?.role === "donar") {
+        postObject.donar = user?._id;
+      }
+      if (user?.role === "organisation") {
+        postObject.organisation = user?._id;
+      }
+      if(user?.role === "admin"){
+        postObject.organisation = user?._id;
+      }
+      if(inventoryType === "out" && user?.role === "donar"){
+        return alert("Donar Can't Create Out Record")
+      }
+
+      const { data } = await API.post("/inventory/create-inventory", postObject);
       if (data?.success) {
         alert("New Record Created");
         window.location.reload();
@@ -186,28 +201,9 @@ const [bloodGroup, setBloodGroup] = useState(items[0].label);
           <div className="flex flex-col gap-2">
             
             
-              <div className="flex flex-row justify-between">
+              <div className="flex flex-row ">
                
-                <div className="flex flex-col gap-2">
-                Record Type: &nbsp;
-                  <Radio.Group
-
-                    
-                    onChange={(e) => 
-                      {setInventoryType(e.target.value)
-                      
-                      }}
-                    value={inventoryType}
-                  
-
-                  >
-                    <Radio value={"in"}>In</Radio>
-                    <Radio value={"out"}>Out</Radio>
-                  </Radio.Group>
-                
-                  
-                  
-                </div>
+               
                 <div>
                 Blood Group: &nbsp;
                 <Dropdown
@@ -226,26 +222,40 @@ const [bloodGroup, setBloodGroup] = useState(items[0].label);
                 
                 //onChange={(e) => setBloodGroup(e.target.value)}
               >
-               <Button>{bloodGroup}</Button>
-              </Dropdown></div>
+               <Button>{bloodGroup}</Button> 
+              </Dropdown></div><p className="text-red-600 mx-2 font-bold"> * </p>
               </div>
-              
-              Donor Email
+            <p className="flex"> Name <p className="text-red-600 mx-2 font-bold"> * </p></p> 
               <Input
-                placeholder="********@email.com"
-                inputType={"email"}
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />Quanitity (ML)
+
+                placeholder="Name"
+                inputType={"text"}
+                value={Name}
+                onChange={(e) => setDonorName(e.target.value)}
+              />
+              
+              <p className="flex"> Donor Phone Number: <p className="text-red-600 mx-2 font-bold"> * </p></p> 
+              <Input
+                placeholder="01*********"
+                inputType={"phone"}
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+              />
+               <p className="flex"> Last Donate Date:</p> 
               <Input
                 
-                placeholder="quantity"
-                inputType={"Number"}
-                value={quantity}
-                onChange={(e) => setQuantity(e.target.value)}
+                placeholder="Last Donate Date"
+                inputType={"number"}
+                value={lastDonateMonth}
+                
+              />
+              <Calendar
+              fullscreen={false}
+              onSelect={(e) => setLastDonateMonth(e)}
               />
             <div>
-                  Division:  {"  "}
+                  
+                  <p className="flex"> Division:  {"  "} <p className="text-red-600 mx-2 font-bold"> * </p></p> 
                    <AutoComplete
                    
         options={options}
@@ -261,6 +271,7 @@ const [bloodGroup, setBloodGroup] = useState(items[0].label);
                  {divison.length>0?<div>
                   <div className="flex gap-2 items-center flex-row">
                   District:  {"  "}
+                  <p className="text-red-600 mx-2 font-bold"> * </p> 
                    <AutoComplete
                    
         options={optionDist[district]}
@@ -273,6 +284,7 @@ const [bloodGroup, setBloodGroup] = useState(items[0].label);
       />
       
       Thana: 
+      <p className="text-red-600 mx-2 font-bold"> * </p>
        <Input
        className="w-[30%]"
                 placeholder="Thana"

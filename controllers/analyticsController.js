@@ -1,65 +1,46 @@
 const inventoryModel = require("../models/inventoryModel");
+const userModel = require("../models/userModel");
 const mongoose = require("mongoose");
 //GET BLOOD DATA
 const bloodGroupDetailsContoller = async (req, res) => {
   try {
     const bloodGroups = ["O+", "O-", "AB+", "AB-", "A+", "A-", "B+", "B-"];
     const bloodGroupData = [];
-    console.log(req.body);
-    const organisation = new mongoose.Types.ObjectId(req.body.userId);
-    //get single blood group
-    await Promise.all(
-      bloodGroups.map(async (bloodGroup) => {
-        //COunt TOTAL IN
-        const totalIn = await inventoryModel.aggregate([
-          {
-            $match: {
-              bloodGroup: bloodGroup,
-              inventoryType: "in",
-              organisation,
-            },
-          },
-          {
-            $group: {
-              _id: null,
-              total: { $sum: "$quantity" },
-            },
-          },
-        ]);
-        //COunt TOTAL OUT
-        const totalOut = await inventoryModel.aggregate([
-          {
-            $match: {
-              bloodGroup: bloodGroup,
-              inventoryType: "out",
-              organisation,
-            },
-          },
-          {
-            $group: {
-              _id: null,
-              total: { $sum: "$quantity" },
-            },
-          },
-        ]);
-        //CALCULATE TOTAL
-        const availabeBlood =
-          (totalIn[0]?.total || 0) - (totalOut[0]?.total || 0);
+    const totalEntry = await inventoryModel.countDocuments();
+    const totalEntryEachMonth = await inventoryModel.aggregate([
+      {
+        $group: {
+          _id: { $month: "$createdAt" },
+          count: { $sum: 1 },
+        },
+      },
+    ]);
 
-        //PUSH DATA
-        bloodGroupData.push({
-          bloodGroup,
-          totalIn: totalIn[0]?.total || 0,
-          totalOut: totalOut[0]?.total || 0,
-          availabeBlood,
-        });
-      })
-    );
+  // const totalEntryEachBloodGroup = await inventoryModel.aggregate([
+  //     {
+  //       $group: {
+  //         _id: { $push: "$bloodGroup" },
+  //         count: { $sum: 1 },
+  //       },
+  //     },
+  //   ]);
+    // total entry for each blood group
+    for (let i = 0; i < bloodGroups.length; i++) {
+      const bloodGroup = bloodGroups[i];
+      const totalEntry = await inventoryModel.countDocuments({
+        bloodGroup: bloodGroup,
+      });
+      bloodGroupData.push({ bloodGroup, totalEntry });
+    }
+   
 
     return res.status(200).send({
       success: true,
       message: "Blood Group Data Fetch Successfully",
       bloodGroupData,
+      totalEntry,
+      totalEntryEachMonth,
+      //totalEntryEachBloodGroup
     });
   } catch (error) {
     console.log(error);

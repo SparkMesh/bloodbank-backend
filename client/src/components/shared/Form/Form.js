@@ -21,7 +21,8 @@ import { signInWithPhoneNumber, RecaptchaVerifier } from "firebase/auth";
 
 import dayjs from "dayjs";
 
-const Form = ({ formType, submitBtn, formTitle,style }) => {
+
+const FormComponent = ({ formType, submitBtn, formTitle,style }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("donar");
@@ -34,7 +35,7 @@ const Form = ({ formType, submitBtn, formTitle,style }) => {
   const [divison, setDivison] = useState("");
   const [district, setDistrict] = useState();
   const [thana, setThana] = useState("");
-  const [gender, setGender] = useState("");
+  const [gender, setGender] = useState("m");
   const [occupation, setOccupation] = useState("");
   const [weight, setWeight] = useState("");
   const [dateofbirth, setDateofbirth] = useState(() => dayjs(Date.now()));
@@ -45,6 +46,7 @@ const Form = ({ formType, submitBtn, formTitle,style }) => {
   const [isVerified, setIsVerified] = useState(false);
   const [open, setOpen] = useState(false);
   const [verificationCode, setVerificationCode] = useState("");
+  const [showCalendar, setShowCalendar] = useState(false);
   function initilizeCaptcha () {
     try {
       window.recaptchaVerifier = new RecaptchaVerifier(auth,'recap', {
@@ -336,7 +338,7 @@ const Form = ({ formType, submitBtn, formTitle,style }) => {
         }
 
       />
-      <fm
+      <Fm
        
        
        initialValues={{
@@ -344,30 +346,9 @@ const Form = ({ formType, submitBtn, formTitle,style }) => {
        }}
         className="flex flex-col justify-start w-[250px] h-full   "
         onSubmit={(e) => {
-          if (formType === "login")
-            return handleLogin(e, email, password, role);
-          else if (formType === "register")
-            return handleRegister(
-              e,
-              name,
-              role,
-              email,
-              password,
-              phone,
-              organisationName,
-              address,
-              hospitalName,
-              website,
-              divison,
-              district,
-              thana,
-              gender,
-              occupation,
-              weight,
-              dateofbirth
-            );
-            else if (formType === "admin-login")
-            return handleLogin(e, email, password, role);
+          console.log("submit");
+          
+            
         }}
       >
         <h1 className="text-center">{formTitle}</h1>
@@ -528,7 +509,7 @@ const Form = ({ formType, submitBtn, formTitle,style }) => {
                    type="primary"
                     htmlType="button"
                     size="middle"
-                   className="bg-red-600 rounded-l-none absolute ml-2 right-0"
+                   className="bg-red-600 rounded-l-none absolute bottom-[24px] right-0"
                     onClick={() => {
                       sendCode();
                      // openModal();
@@ -564,8 +545,17 @@ const Form = ({ formType, submitBtn, formTitle,style }) => {
                     value={weight}
                     onChange={(e) => setWeight(e.target.value)}
                   />
-                  Date of Birth {dateofbirth.format("DD-MM-YYYY")}
-                  <div style={{ width: 282, height: 360 }} className="relative -ml-4  border-2 rounded-lg ">
+                  <div className="flex flex-row justify-between">
+                  Date of Birth <div
+
+                  className="border-2 rounded-lg px-2 cursor-pointer"
+                  onClick={() => {
+setShowCalendar(!showCalendar)
+                  }}
+                  >{dateofbirth.format("DD-MM-YYYY")}</div>
+                  <p className="text-red-600 font-bold mx-2">*</p>
+                  </div>
+                {showCalendar ?  <div style={{ width: 282, height: 360 }} className="relative -ml-4  border-2 rounded-lg ">
                     <Calendar
                       fullscreen={false}
                       
@@ -576,7 +566,7 @@ const Form = ({ formType, submitBtn, formTitle,style }) => {
                         setDateofbirth(dayjs(value));
                       }}
                     />
-                  </div>
+                  </div>:null}
                   <div className=" flex flex-row items-center py-2">
                     <p className="mr-2">Division</p>
                     <AutoComplete
@@ -590,7 +580,7 @@ const Form = ({ formType, submitBtn, formTitle,style }) => {
                           .indexOf(inputValue.toUpperCase()) !== -1
                       }
                       placeholder="Division"
-                    />
+                    /><p className="text-red-600 font-bold mx-2">*</p>
                   </div>
                   {divison.length > 0 ? (<div>
                     <div className="flex flex-row items-center py-2">
@@ -605,7 +595,7 @@ const Form = ({ formType, submitBtn, formTitle,style }) => {
                             .indexOf(inputValue.toUpperCase()) !== -1
                         }
                         placeholder="District"
-                      />
+                      /><p className="text-red-600 font-bold mx-2">*</p>
                      
                     </div> <InputType
                         labelText={"Thana"}
@@ -628,9 +618,33 @@ const Form = ({ formType, submitBtn, formTitle,style }) => {
         <Button
            // className="font-semibold border-2 p-1 my-2 px-2 focus:opacity-75 focus:bg-blue-200 transition-all border-blue-200 rounded-lg "
             type="primary"
-           onClick={(e )=>{
+            htmlType="submit"
+           onClick={(e)=>{
+            console.log("submit");
             if (formType === "login" || formType === "admin-login")
             return handleLogin(e, email, password, role);
+          else if (formType === "register")
+            return handleRegister(
+              e,
+              name,
+              role,
+              email,
+              password,
+              phone,
+              organisationName,
+              address,
+              hospitalName,
+              website,
+              divison,
+              district,
+              thana,
+              gender,
+              occupation,
+              weight,
+              dateofbirth
+            );
+
+            
            }}
             className="bg-red-600 mb-2 cursor-pointer text-white px-4 py-2 rounded-lg focus:scale-90  focus:bg-gray-800 transition-all flex flex-row justify-center items-center gap-2 ease-in-out  "
 
@@ -659,10 +673,10 @@ const Form = ({ formType, submitBtn, formTitle,style }) => {
           )}
           
         </div>
-      </fm>
+      </Fm>
     </Card>  </Space>
   </ConfigProvider>
   );
 };
 
-export default Form;
+export default FormComponent;

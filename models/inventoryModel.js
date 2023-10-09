@@ -2,42 +2,48 @@ const mongoose = require("mongoose");
 
 const inventorySchema = new mongoose.Schema(
   {
+    
     inventoryType: {
       type: String,
-      required: [true, "inventory type require"],
+     
       enum: ["in", "out"],
+    },
+    Name: {
+      type: String,
+      required: function () {
+        return this.inventoryType === "in";
+      },
     },
     bloodGroup: {
       type: String,
       required: [true, "blood group is require"],
       enum: ["O+", "O-", "AB+", "AB-", "A+", "A-", "B+", "B-"],
     },
-    quantity: {
-      type: Number,
-      require: [true, "blood quanity is require"],
-    },
-    email: {
+    lastDonateMonth: {
       type: String,
-      required: [true, "Donar Email is Required"],
+      required: [true, "lastDonateMonth is required"],
+    },
+    phone: {
+      type: String,
+      required: [true, "Donar phone is Required"],
     },
     organisation: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "users",
-      required: [true, "organisation is require"],
+     // required: [true, "organisation is required"],
+     required: function () {
+      return this.inventoryType === "out";
+    },
     },
     hospital: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "users",
-      required: function () {
-        return this.inventoryType === "out";
-      },
+     
     },
     donar: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "users",
-      required: function () {
-        return this.inventoryType === "in";
-      },
+      //required: [true, "donor is required"],
     },
     district: {
       type: String,
@@ -51,7 +57,7 @@ const inventorySchema = new mongoose.Schema(
     thana: {
       type: String,
 
-      required: [true, "divison is required"],
+      required: [true, "thana is required"],
     },
     
 
