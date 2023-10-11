@@ -4,6 +4,8 @@ const colors = require("colors");
 const morgan = require("morgan");
 const cors = require("cors");
 const connectDB = require("./config/db");
+const updateDocumentTitle = require("./config/sanity");
+updateDocumentTitle();
 //dot config
 dotenv.config();
 
