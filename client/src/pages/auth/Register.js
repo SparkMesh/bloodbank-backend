@@ -11,7 +11,10 @@ const Register = () => {
     <>
       {error && <span>{alert(error)}</span>}
       {loading ? (
-        <Spinner />
+        <div 
+        className="flex justify-center items-center w-screen h-screen"
+        >
+        <Spinner /></div>
       ) : (
         <ConfigProvider
         

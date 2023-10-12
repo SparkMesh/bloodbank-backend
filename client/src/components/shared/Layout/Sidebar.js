@@ -140,7 +140,7 @@ if(user?.role === "donar" ){
   )
   items.push(
     {key: '2',
-    label:"My Donations",
+    label:"My Donors",
     path:"/donation",
     icon: <ContainerFilled />,
     })
@@ -149,7 +149,7 @@ if(user?.role === "donar" ){
       label:"My Requests"
     ,
     path:"/request-list",
-    icon: <PieChartFilled />,})
+    icon: <MedicineBoxFilled />,})
 }
   if(user?.role === "donar" || user?.role === "hospital"){
     items.push(

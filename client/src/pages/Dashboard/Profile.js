@@ -1,4 +1,4 @@
-import {Form , Button,ConfigProvider,Space,Input, AutoComplete,Calendar, Radio} from 'antd';
+import {Form , Button,ConfigProvider,Space,Input, AutoComplete,Calendar, Radio, DatePicker} from 'antd';
 import React, { useCallback,useEffect,useState } from 'react';
 import Layout from "./../../components/shared/Layout/Layout";
 import dayjs from 'dayjs';
@@ -8,7 +8,7 @@ const Profile = () => {
     const {user} = useSelector(state=>state.auth);
     const [divison, setDivison] = useState("");
     const [district, setDistrict] = useState(user?.district);
-    const [dateOfBirth, setDateOfBirth] = useState(user?.dateOfBirth);
+    const [dateOfBirth, setDateOfBirth] = useState(user?.dateofbirth);
     const [dayjsofBirth, setDayjsofBirth] = useState('');
     const [name, setName] = useState(user?.name);
     const [organisationName, setOrganisationName] = useState(user?.organisationName);
@@ -23,7 +23,7 @@ const Profile = () => {
    const [occupation, setOccupation] = useState(user?.occupation);
     const [divisons, setDivisons] = useState(user?.divison);
     const [loading, setLoading] = useState(false);
-
+console.log(user)
 
     const onSelect = (data) => {
         //console.log(optionDist);
@@ -284,15 +284,13 @@ const Profile = () => {
                 <Form.Item
                 label='Date of birth'
                 name='dateOfBirth'
-               
+               className='flex flex-row'
                 >
-                    <Calendar
-                    style={{ width: 282, height: 360 }}
-                    fullscreen={false}
-                    onChange={(e)=>setDayjsofBirth(dayjs(e.target.value))}
-                    defaultValue={dayjs(dateOfBirth)}
+                   
+                    <DatePicker
+                    placeholder={dateOfBirth}
                     value={dayjs(dateOfBirth)}
-
+                    onChange={(e)=>setDateOfBirth(e.target.value)}
                     />
                 </Form.Item>
 

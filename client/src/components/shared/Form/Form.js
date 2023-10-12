@@ -11,7 +11,7 @@ import {
   Spin,
   Modal,
   Input,
-  ConfigProvider, Space, theme ,Radio 
+  ConfigProvider, Space, theme ,Radio ,DatePicker
 } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 
@@ -31,7 +31,7 @@ const FormComponent = ({ formType, submitBtn, formTitle,style }) => {
   const [hospitalName, setHospitalName] = useState("");
   const [website, setWebsite] = useState("");
   const [address, setAddress] = useState("");
-  const [phone, setPhone] = useState("+880");
+  const [phone, setPhone] = useState("");
   const [divison, setDivison] = useState("");
   const [district, setDistrict] = useState();
   const [thana, setThana] = useState("");
@@ -307,7 +307,9 @@ const FormComponent = ({ formType, submitBtn, formTitle,style }) => {
        title= "Verify Your Phone Number"
        footer={null}
         closable={true}
-        
+        onCancel={() => {
+          setOpen(false);
+        }}
        children={
           <div>
             <p>
@@ -493,7 +495,7 @@ const FormComponent = ({ formType, submitBtn, formTitle,style }) => {
                     value={address}
                     onChange={(e) => setAddress(e.target.value)}
                   />
-                  <div className="flex flex-row relative ">
+                  <div className="flex flex-row">
                   <InputType
                     labelText={"Phone"}
                     labelFor={"forPhone"}
@@ -501,16 +503,19 @@ const FormComponent = ({ formType, submitBtn, formTitle,style }) => {
                     name={"phone"}
                     value={phone}
                     defaultValue={"+880"}
-                    style={"rounded-r-none"}
+                    
                     onChange={(e) => setPhone(e.target.value)}
                   />
+                    <p
+                  className="text-red-600 font-bold mx-2"
+                  >*</p>   </div>
                   <Button
-                   disabled={isVerified}
+                   disabled={isVerified || loading}
                    loading={loading}
                    type="primary"
                     htmlType="button"
                     size="middle"
-                   className="bg-red-600 rounded-l-none absolute bottom-[24px] right-3"
+                   className="bg-red-600 mb-4 "
                     onClick={() => {
                       sendCode();
                      // openModal();
@@ -520,10 +525,8 @@ const FormComponent = ({ formType, submitBtn, formTitle,style }) => {
                     {isVerified ? "Verified" : "Verify"}
                    
                   </Button>
-                  <p
-                  className="text-red-600 font-bold ml-6 "
-                  >*</p>
-                  </div>
+                
+               
                   Gender
                   <Radio.Group
                   className="my-4"
@@ -550,27 +553,16 @@ const FormComponent = ({ formType, submitBtn, formTitle,style }) => {
                     onChange={(e) => setWeight(e.target.value)}
                   />
                   <div className="flex flex-row justify-between">
-                  Date of Birth <div
-
-                  className="border-2 rounded-lg px-2 cursor-pointer"
-                  onClick={() => {
-setShowCalendar(!showCalendar)
-                  }}
-                  >{dateofbirth.format("DD-MM-YYYY")}</div>
+                  Date of Birth
+                  <DatePicker 
+                  className="mx-1"
+                  onChange={(date)=>{
+                    setDateofbirth(date)
+                  }} />
+                  
                   <p className="text-red-600 font-bold mx-2">*</p>
                   </div>
-                {showCalendar ?  <div style={{ width: 282, height: 360 }} className="relative -ml-4  border-2 rounded-lg ">
-                    <Calendar
-                      fullscreen={false}
-                      
-                      className=" "
-                      onSelect={(value) => setDateofbirth(dayjs(value))}
-                      value={dateofbirth}
-                      onPanelChange={(value, mode) => {
-                        setDateofbirth(dayjs(value));
-                      }}
-                    />
-                  </div>:null}
+              
                   <div className=" flex flex-row items-center py-2">
                     <p className="mr-2">Division</p>
                     <AutoComplete
@@ -603,7 +595,7 @@ setShowCalendar(!showCalendar)
                      
                     </div> <InputType
                         labelText={"Thana"}
-                        labelFor={"forPhone"}
+                        labelFor={"forThana"}
                         inputType={"text"}
                         name={"thana"}
                         value={thana}
@@ -625,9 +617,11 @@ setShowCalendar(!showCalendar)
             htmlType="submit"
            onClick={(e)=>{
             console.log("submit");
+          
             if (formType === "login" || formType === "admin-login")
             return handleLogin(e, email, password, role);
           else if (formType === "register")
+          if(isVerified){
             return handleRegister(
               e,
               name,
@@ -648,7 +642,10 @@ setShowCalendar(!showCalendar)
               dateofbirth
             );
 
-            
+            }
+            else{
+              alert("Please Verify Your Phone Number!")
+            }
            }}
             className="bg-red-600 mb-2 cursor-pointer text-white px-4 py-2 rounded-lg focus:scale-90  focus:bg-gray-800 transition-all flex flex-row justify-center items-center gap-2 ease-in-out  "
 

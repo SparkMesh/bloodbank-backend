@@ -8,6 +8,7 @@ const InputType = ({
   onChange,
   name,
   style,
+  defaultValue
 }) => {
   const [isRequired,setIsRequired] = React.useState(true)
   useEffect(() => {
@@ -41,7 +42,7 @@ const InputType = ({
       
   
         <Input
-        
+        defaultValue={defaultValue}
           type={inputType}
           className={`bg-gray-100 ${style} rounded-lg `}
           name={name}

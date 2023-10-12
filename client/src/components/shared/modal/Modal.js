@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import InputType from "./../Form/InputType";
 import API from "./../../../services/API";
-import { Button,Modal as AntMod,Dropdown,Radio,Input,AutoComplete,ConfigProvider, Space, Calendar } from 'antd';
+import { Button,Modal as AntMod,Dropdown,Radio,Input,AutoComplete,ConfigProvider, Space, Calendar, DatePicker } from 'antd';
 import { useEffect } from "react";
 import dayjs from "dayjs";
 const Modal = ({isModal,handleCancel,showModal,handleOk}) => {
@@ -194,7 +194,7 @@ const [bloodGroup, setBloodGroup] = useState(items[0].label);
           handleOk()
         }
         } onCancel={handleCancel}
-       title="Create New Record"
+       title="Add New Donor"
 
       >
         <div className="modal-dialog">
@@ -242,17 +242,12 @@ const [bloodGroup, setBloodGroup] = useState(items[0].label);
                 onChange={(e) => setPhone(e.target.value)}
               />
                <p className="flex"> Last Donate Date:</p> 
-              <Input
-                
-                placeholder="Last Donate Date"
-                inputType={"number"}
-                value={lastDonateMonth}
-                
+              
+              <DatePicker
+              value={lastDonateMonth}
+              onChange={(e) => setLastDonateMonth(e)}
               />
-              <Calendar
-              fullscreen={false}
-              onSelect={(e) => setLastDonateMonth(e)}
-              />
+             
             <div>
                   
                   <p className="flex"> Division:  {"  "} <p className="text-red-600 mx-2 font-bold"> * </p></p> 

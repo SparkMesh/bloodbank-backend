@@ -71,6 +71,7 @@ export const userRegister = createAsyncThunk(
       if (data?.success) {
         alert("User Registerd Successfully");
         window.location.replace("/login");
+        alert("Now Login With Your Credentials")
         // toast.success("User Registerd Successfully");
       }
     } catch (error) {
